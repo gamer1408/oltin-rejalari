@@ -34,8 +34,14 @@ const Navbar = () => {
       <div className="container px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="font-serif text-2xl font-bold text-gradient-gold">
-            Malina UZ
+          <a href="#" className="flex items-center gap-3">
+            <img 
+              src={theme === "dark" ? "/Logo.png" : "/logo at header.png"} 
+              alt="Malina UZ" 
+              className="w-18 h-9" 
+              style={{ width: '72px', height: '36px' }}
+            />
+            <span className="font-serif text-2xl font-bold text-gradient-gold">Malina UZ</span>
           </a>
 
           {/* Desktop Nav */}
