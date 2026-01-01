@@ -22,30 +22,27 @@ const OrderSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Try to get the current host for mobile compatibility
-      const host = window.location.hostname;
-      const apiUrl = host === 'localhost' ? 'http://localhost:3001/apply' : `http://${host}:3001/apply`;
+      // Send to Telegram via Render backend
+      const messageText = `📝 Yangi ariza!
+
+👤 Ism: ${formData.name}
+📞 Telefon: ${formData.phone}
+📍 Viloyat: ${formData.region}
+📦 Nihollar soni: ${formData.plants}
+🍓 Nav: ${formData.type === 'maravilla' ? 'Maravilla' : formData.type === 'enrasadera' ? 'Enrasadera' : 'Ikkalasi'}
+💬 Xabar: ${formData.message || "Yo'q"}`;
       
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          region: formData.region,
-          quantity: parseInt(formData.plants) || 0,
-          product: formData.type === 'maravilla' ? 'Maravilla' : formData.type === 'enrasadera' ? 'Enrasadera' : 'Ikkalasi',
-          message: formData.message || ''
-        })
+      const response = await fetch("https://oltin-rejalari.onrender.com/send-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: messageText })
       });
       
       const result = await response.json();
       
-      if (response.ok && result.success) {
-        toast.success("✅ Telegram xabar yuborildi!", {
-          description: "Arizangiz qabul qilindi. Tez orada bog'lanamiz.",
+      if (result.success) {
+        toast.success("✅ Ariza muvaffaqiyatli yuborildi!", {
+          description: "Tez orada bog'lanamiz.",
         });
         setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
       } else {
@@ -53,7 +50,7 @@ const OrderSection = () => {
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      toast.error("❌ Xatolik: Telegram xabar yuborilmadi", {
+      toast.error("❌ Xatolik: Ariza yuborilmadi", {
         description: "Iltimos telefon orqali bog'laning: +998 93 127 57 37",
       });
     } finally {
