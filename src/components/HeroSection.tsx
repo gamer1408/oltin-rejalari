@@ -15,7 +15,7 @@ const HeroSection = () => {
           loop
           muted={isMuted}
           playsInline
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-60"
           poster="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&q=80"
         >
           {/* Using a placeholder video URL - in production use actual cultivation video */}
@@ -25,12 +25,12 @@ const HeroSection = () => {
           />
         </video>
         
-        {/* Dark Overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-transparent to-background/90" />
+        {/* Enhanced Overlay for better visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/95" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-transparent to-background/85" />
         
-        {/* Additional dark overlay at center for text readability */}
-        <div className="absolute inset-0 bg-background/30" />
+        {/* Accent overlay for warmth */}
+        <div className="absolute inset-0 bg-accent/5" />
       </div>
 
       {/* Mute/Unmute Button */}
@@ -132,14 +132,19 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + index * 0.1, duration: 0.6 }}
-                className="glass-card rounded-2xl p-6 flex items-center gap-4 glow-emerald"
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="glass-card rounded-2xl p-6 flex items-center gap-4 border-2 border-accent/20 hover:border-accent/40 hover:glow-gold transition-all duration-500"
               >
-                <div className="w-14 h-14 rounded-xl bg-secondary/50 flex items-center justify-center">
+                <motion.div 
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                  className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/30 to-secondary/40 flex items-center justify-center"
+                >
                   <item.icon className="w-7 h-7 text-accent" />
-                </div>
+                </motion.div>
                 <div className="text-left">
                   <div className="text-2xl font-bold text-accent">{item.title}</div>
-                  <div className="text-sm text-muted-foreground">{item.subtitle}</div>
+                  <div className="text-sm text-foreground/80 font-medium">{item.subtitle}</div>
                 </div>
               </motion.div>
             ))}

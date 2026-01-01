@@ -15,13 +15,41 @@ const OrderSection = () => {
     type: "maravilla",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Arizangiz qabul qilindi! Tez orada bog'lanamiz.", {
-      description: "Rahmat, sizning ishonchingiz uchun!",
-    });
-    setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch('http://localhost:3001/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          region: formData.region,
+          quantity: parseInt(formData.plants),
+          product: formData.type === 'maravilla' ? 'Maravilla' : formData.type === 'enrasadera' ? 'Enrasadera' : 'Ikkalasi',
+          message: formData.message
+        })
+      });
+      
+      if (response.ok) {
+        toast.success("Arizangiz qabul qilindi! Tez orada bog'lanamiz.", {
+          description: "Rahmat, sizning ishonchingiz uchun!",
+        });
+        setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      toast.error("Xatolik yuz berdi. Iltimos qaytadan urinib ko'ring.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -165,12 +193,13 @@ const OrderSection = () => {
 
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full btn-premium flex items-center justify-center gap-3"
+                disabled={isSubmitting}
+                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                className={`w-full btn-premium flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Send className="w-5 h-5 relative z-10" />
-                <span className="relative z-10">Ariza Yuborish</span>
+                <span className="relative z-10">{isSubmitting ? 'Yuborilmoqda...' : 'Ariza Yuborish'}</span>
               </motion.button>
             </form>
           </motion.div>

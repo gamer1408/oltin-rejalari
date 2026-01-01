@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,6 +49,19 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
+            
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="w-10 h-10 rounded-xl glass-card flex items-center justify-center hover:bg-accent/10 transition-colors"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-5 h-5 text-accent" />
+              ) : (
+                <Moon className="w-5 h-5 text-accent" />
+              )}
+            </button>
+            
             <a
               href="tel:+998901234567"
               className="btn-premium py-2.5 px-6 text-sm"
@@ -89,6 +104,20 @@ const Navbar = () => {
                   {link.label}
                 </a>
               ))}
+              
+              {/* Mobile Theme Toggle */}
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="flex items-center gap-3 text-foreground/80 hover:text-accent transition-colors font-medium py-2"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+                {theme === "dark" ? "Yorug' rejim" : "Qorong'u rejim"}
+              </button>
+              
               <a
                 href="tel:+998901234567"
                 className="btn-premium py-3 text-center mt-2"
