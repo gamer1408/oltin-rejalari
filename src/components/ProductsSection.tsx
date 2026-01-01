@@ -1,15 +1,16 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Check, Star, Sparkles, TrendingUp } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { Check, Star, Sparkles, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
 import maravillaImage from "@/assets/maravilla-raspberry.jpg";
 import enrasaderaImage from "@/assets/enrasadera-raspberry.jpg";
 
+// Multiple images for each product (using same images rotated for demo - in production use real different images)
 const products = [
   {
     name: "Maravilla",
     tagline: "Eng yuqori hosildor nav",
-    image: maravillaImage,
+    images: [maravillaImage, enrasaderaImage, maravillaImage, enrasaderaImage],
     price: "15,000",
     originalPrice: "20,000",
     features: [
@@ -27,7 +28,7 @@ const products = [
   {
     name: "Enrasadera",
     tagline: "Tirmaladigan nav — kam joy",
-    image: enrasaderaImage,
+    images: [enrasaderaImage, maravillaImage, enrasaderaImage, maravillaImage],
     price: "12,000",
     originalPrice: "16,000",
     features: [
@@ -43,6 +44,70 @@ const products = [
     borderColor: "border-secondary/30",
   },
 ];
+
+const ImageCarousel = ({ images, productName, color }: { images: string[]; productName: string; color: string }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <div className="relative h-64 overflow-hidden group">
+      {images.map((image, index) => (
+        <motion.img
+          key={index}
+          src={image}
+          alt={`${productName} - ${index + 1}`}
+          className="absolute inset-0 w-full h-full object-cover"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: index === currentIndex ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+        />
+      ))}
+      <div className={`absolute inset-0 bg-gradient-to-t ${color}`} />
+      
+      {/* Navigation Arrows */}
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+        }}
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/50 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+      >
+        <ChevronLeft className="w-4 h-4 text-foreground" />
+      </button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setCurrentIndex((prev) => (prev + 1) % images.length);
+        }}
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/50 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+      >
+        <ChevronRight className="w-4 h-4 text-foreground" />
+      </button>
+
+      {/* Dots Indicator */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentIndex(index);
+            }}
+            className={`w-2 h-2 rounded-full transition-all ${
+              index === currentIndex ? "bg-accent w-4" : "bg-foreground/30"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const ProductsSection = () => {
   const ref = useRef(null);
@@ -117,26 +182,19 @@ const ProductsSection = () => {
               )}
 
               <div className={`glass-card rounded-3xl overflow-hidden border ${product.borderColor} group-hover:glow-raspberry transition-all duration-500`}>
-                {/* Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <motion.img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${product.color}`} />
-                  
-                  {/* ROI Badge */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-accent/30">
+                {/* Image Carousel */}
+                <ImageCarousel images={product.images} productName={product.name} color={product.color} />
+                
+                {/* ROI Badge */}
+                <div className="relative">
+                  <div className="absolute -top-10 left-4 flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-accent/30 z-10">
                     <TrendingUp className="w-4 h-4 text-accent" />
                     <span className="text-accent font-bold">{product.roi} ROI</span>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-8">
+                <div className="p-8 pt-6">
                   <h3 className="font-serif text-3xl font-bold text-foreground mb-2">
                     {product.name}
                   </h3>
