@@ -1,24 +1,55 @@
 const express = require("express");
+const cors = require("cors");
 const fetch = require("node-fetch"); // for Telegram API
 require('dotenv').config(); // Load environment variables
 const app = express();
 
-// Enable CORS for all origins
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
+// ✅ PRODUCTION CORS CONFIG
+const allowedOrigins = [
+  'http://localhost:3000',  // Local development
+  'https://oltin-rejalari.onrender.com',  // Your frontend URL
+  'https://oltin-rejalari.vercel.app',    // Alternative frontend
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,  // Allow cookies/sessions
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json()); // parse JSON bodies
 
 app.get("/", (req, res) => {
   res.send("Server is running! Visit /ping to test the backend.");
+});
+
+// Health check endpoint (Render monitors this)
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    service: 'oltin-rejalari-backend',
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+// Test endpoint to verify connection
+app.get('/api/test', (req, res) => {
+  res.json({
+    message: 'Backend is connected!',
+    frontend: req.get('origin') || 'Unknown',
+    time: new Date().toISOString()
+  });
 });
 
 app.get("/ping", (req, res) => {
@@ -46,12 +77,14 @@ app.post("/send-message", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT;  // dynamic port assigned by Render
-const HOST = '0.0.0.0';         // must bind to all interfaces
+// ✅ FIX PORT BINDING (CRITICAL FOR RENDER)
+const PORT = process.env.PORT || 3001;
+const HOST = '0.0.0.0';  // '0.0.0.0' allows external connections
 
 // Environment validation
 console.log("Environment check:", { BOT_TOKEN: process.env.BOT_TOKEN, CHAT_ID: process.env.CHAT_ID });
 
 app.listen(PORT, HOST, () => {
-  console.log(`Server running on ${HOST}:${PORT}`);
+  console.log(`✅ Backend running on port ${PORT}`);
+  console.log(`🌍 Accessible at: http://${HOST}:${PORT}`);
 });
