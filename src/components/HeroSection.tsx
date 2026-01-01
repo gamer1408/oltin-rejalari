@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { TrendingUp, Truck, Shield, Volume2, VolumeX } from "lucide-react";
 import { useState } from "react";
+import heroImage from "@/assets/hero-raspberry-field.jpg";
 
 const HeroSection = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -9,41 +10,21 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
-        {/* Video Background - using a stock farming video that shows cultivation */}
-        <video
-          autoPlay
-          loop
-          muted={isMuted}
-          playsInline
-          className="w-full h-full object-cover opacity-60"
-          poster="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&q=80"
-        >
-          {/* Using a placeholder video URL - in production use actual cultivation video */}
-          <source
-            src="https://videos.pexels.com/video-files/2942284/2942284-uhd_2560_1440_30fps.mp4"
-            type="video/mp4"
-          />
-        </video>
+        {/* Background Image */}
+        <img
+          src={heroImage}
+          alt="Raspberry field"
+          className="w-full h-full object-cover opacity-70"
+        />
         
         {/* Enhanced Overlay for better visibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/95" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-transparent to-background/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
         
         {/* Accent overlay for warmth */}
         <div className="absolute inset-0 bg-accent/5" />
       </div>
 
-      {/* Mute/Unmute Button */}
-      <button
-        onClick={() => setIsMuted(!isMuted)}
-        className="absolute bottom-24 right-6 z-20 w-12 h-12 rounded-full glass-card flex items-center justify-center hover:scale-105 transition-transform border border-accent/30"
-      >
-        {isMuted ? (
-          <VolumeX className="w-5 h-5 text-accent" />
-        ) : (
-          <Volume2 className="w-5 h-5 text-accent" />
-        )}
-      </button>
 
       {/* Floating Decorative Elements */}
       <motion.div
@@ -77,27 +58,26 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Main Headline */}
-          <motion.h1
+          <h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6"
+            className="font-serif text-4xl md:text-6xl lg:text-8xl font-bold leading-tight mb-6"
           >
             <span className="text-foreground">Malina Bilan</span>
             <br />
             <span className="text-gradient-gold">Boylik Yo'li</span>
-          </motion.h1>
+          </h1>
 
           {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed px-4"
           >
             1 yil ichida <span className="text-accent font-semibold">300% daromad</span> oling. 
-            Premium Maravilla va Enrasadera navlari — Ispaniya texnologiyasi, 
-            O'zbekiston iqlimiga moslashtirilgan.
+            Premium navlar — O'zbekiston iqlimiga moslashtirilgan.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -105,12 +85,12 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="flex flex-col gap-4 justify-center mb-12 px-4"
           >
-            <a href="#products" className="btn-premium relative z-10">
+            <a href="#products" className="btn-premium relative z-10 py-4 text-lg">
               <span className="relative z-10">Hoziroq Buyurtma Bering</span>
             </a>
-            <a href="#calculator" className="btn-secondary-premium">
+            <a href="#calculator" className="btn-secondary-premium py-4 text-lg">
               Daromadni Hisoblang
             </a>
           </motion.div>
@@ -120,7 +100,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1, duration: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto"
+            className="grid grid-cols-1 gap-4 max-w-4xl mx-auto px-4"
           >
             {[
               { icon: TrendingUp, title: "300%+", subtitle: "Yillik Daromad" },
@@ -133,17 +113,17 @@ const HeroSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + index * 0.1, duration: 0.6 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="glass-card rounded-2xl p-6 flex items-center gap-4 border-2 border-accent/20 hover:border-accent/40 hover:glow-gold transition-all duration-500"
+                className="glass-card rounded-2xl p-4 flex items-center gap-4 border-2 border-accent/20 hover:border-accent/40 hover:glow-gold transition-all duration-500"
               >
                 <motion.div 
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
-                  className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/30 to-secondary/40 flex items-center justify-center"
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/30 to-secondary/40 flex items-center justify-center flex-shrink-0"
                 >
-                  <item.icon className="w-7 h-7 text-accent" />
+                  <item.icon className="w-6 h-6 text-accent" />
                 </motion.div>
                 <div className="text-left">
-                  <div className="text-2xl font-bold text-accent">{item.title}</div>
+                  <div className="text-xl font-bold text-accent">{item.title}</div>
                   <div className="text-sm text-foreground/80 font-medium">{item.subtitle}</div>
                 </div>
               </motion.div>

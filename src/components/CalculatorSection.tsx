@@ -1,26 +1,101 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Calculator, TrendingUp, Wallet, Calendar, ChevronRight } from "lucide-react";
+import { Calculator, TrendingUp, Wallet, Calendar, ChevronRight, Info } from "lucide-react";
 
 const CalculatorSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [plants, setPlants] = useState(1000);
+  const [showCalculation, setShowCalculation] = useState(false);
+  const [selectedSquare, setSelectedSquare] = useState<number | null>(null);
 
-  // Calculations based on realistic raspberry farming data
-  const pricePerPlant = 15000; // UZS
-  const yieldPerPlant = 4; // kg per year (average)
-  const pricePerKg = 30000; // UZS market price
-  const yearsToMature = 1;
-  const productiveYears = 5;
+  // Calculations
+  const initialCharge = plants * 30000;
+  const harvest = plants * 2 * 60000;
+  const plantSales = plants * 5 * 30000;
+  const yearlyIncome = harvest + plantSales;
+  const yearlyProfit = yearlyIncome - initialCharge;
+  const profitPercent = Math.round((yearlyProfit / initialCharge) * 100);
 
-  const investment = plants * pricePerPlant;
-  const yearlyHarvest = plants * yieldPerPlant;
-  const yearlyRevenue = yearlyHarvest * pricePerKg;
-  const yearlyProfit = yearlyRevenue - (investment * 0.1); // 10% maintenance
-  const roi = Math.round((yearlyProfit / investment) * 100);
-  const paybackMonths = Math.round((investment / yearlyProfit) * 12);
+  // Helper function to format display values
+  const formatDisplayValue = (num: number) => {
+    if (num >= 1000000000) {
+      return `${(num / 1000000000).toFixed(1)} MLRD`;
+    } else if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(0)} MLN`;
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(0)} MING`;
+    }
+    return num.toString();
+  };
+
+  // Helper function to format numbers
+  const formatNumber = (num: number) => {
+    if (num >= 1000000000) {
+      return `${(num / 1000000000).toFixed(1)} milliard`;
+    } else if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(0)} million`;
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(0)} ming`;
+    }
+    return num.toString();
+  };
+
+  const calculations = [
+    {
+      label: "Boshlang'ich sarmoya",
+      value: formatDisplayValue(initialCharge),
+      suffix: "so'm",
+      color: "text-foreground",
+      formula: "N_P × 30,000 so'm",
+      explanation: "Har bir nihol uchun 30,000 so'm to'lov",
+      breakdown: [
+        `Nihollar soni: ${plants.toLocaleString()}`,
+        `Har bir nihol: 30 ming so'm`,
+        `Jami: ${plants.toLocaleString()} × 30 ming = ${formatNumber(initialCharge)} so'm`
+      ]
+    },
+    {
+      label: "Yillik daromad",
+      value: formatDisplayValue(yearlyIncome),
+      suffix: "so'm",
+      color: "text-accent",
+      formula: "Hosil daromadi + Nihol sotish daromadi",
+      explanation: "Meva sotish va nihol ko'paytirish daromadi",
+      breakdown: [
+        `Hosil daromadi: ${plants.toLocaleString()} × 2 kg × 60 ming = ${formatNumber(harvest)} so'm`,
+        `Nihol sotish: ${plants.toLocaleString()} × 5 dona × 30 ming = ${formatNumber(plantSales)} so'm`,
+        `Jami yillik daromad: ${formatNumber(harvest)} + ${formatNumber(plantSales)} = ${formatNumber(yearlyIncome)} so'm`
+      ]
+    },
+    {
+      label: "Sof foyda",
+      value: formatDisplayValue(yearlyProfit),
+      suffix: "so'm",
+      color: "text-accent",
+      formula: "Yillik daromad - Boshlang'ich sarmoya",
+      explanation: "Birinchi yildagi sof foyda",
+      breakdown: [
+        `Yillik daromad: ${formatNumber(yearlyIncome)} so'm`,
+        `Boshlang'ich sarmoya: ${formatNumber(initialCharge)} so'm`,
+        `Sof foyda: ${formatNumber(yearlyIncome)} - ${formatNumber(initialCharge)} = ${formatNumber(yearlyProfit)} so'm`
+      ]
+    },
+    {
+      label: "Foyda foizi",
+      value: profitPercent,
+      suffix: "%",
+      color: "text-accent",
+      formula: "(Sof foyda ÷ Boshlang'ich sarmoya) × 100",
+      explanation: "Investitsiya o'sish sur'ati",
+      breakdown: [
+        `Sof foyda: ${formatNumber(yearlyProfit)} so'm`,
+        `Boshlang'ich sarmoya: ${formatNumber(initialCharge)} so'm`,
+        `Foyda foizi: (${formatNumber(yearlyProfit)} ÷ ${formatNumber(initialCharge)}) × 100 = ${profitPercent}%`
+      ]
+    },
+  ];
 
   return (
     <section id="calculator" className="py-24 relative overflow-hidden" ref={ref}>
@@ -73,7 +148,17 @@ const CalculatorSection = () => {
               <div className="flex justify-between items-center mb-4">
                 <label className="text-lg font-medium text-foreground">Nihollar soni:</label>
                 <div className="flex items-center gap-2">
-                  <span className="text-4xl font-bold text-accent">{plants.toLocaleString()}</span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="10000"
+                    value={plants}
+                    onChange={(e) => {
+                      const value = Math.max(0, Math.min(10000, Number(e.target.value) || 0));
+                      setPlants(value);
+                    }}
+                    className="text-4xl font-bold text-accent bg-transparent border-2 border-accent/30 rounded-xl px-4 py-2 text-center w-48 focus:border-accent focus:outline-none hover:border-accent/50 transition-colors"
+                  />
                   <span className="text-muted-foreground">ta</span>
                 </div>
               </div>
@@ -82,98 +167,148 @@ const CalculatorSection = () => {
                 min="100"
                 max="10000"
                 step="100"
-                value={plants}
+                value={Math.min(plants, 10000)}
                 onChange={(e) => setPlants(Number(e.target.value))}
                 className="w-full h-3 rounded-full appearance-none cursor-pointer bg-muted"
                 style={{
-                  background: `linear-gradient(to right, hsl(45 90% 55%) 0%, hsl(45 90% 55%) ${(plants - 100) / 99}%, hsl(150 15% 15%) ${(plants - 100) / 99}%, hsl(150 15% 15%) 100%)`,
+                  background: `linear-gradient(to right, hsl(45 90% 55%) 0%, hsl(45 90% 55%) ${(Math.min(plants, 10000) - 100) / 99}%, hsl(150 15% 15%) ${(Math.min(plants, 10000) - 100) / 99}%, hsl(150 15% 15%) 100%)`,
                 }}
               />
               <div className="flex justify-between text-sm text-muted-foreground mt-2">
                 <span>100</span>
                 <span>5,000</span>
-                <span>10,000</span>
+                <span>10,000+</span>
               </div>
             </div>
 
             {/* Results Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { 
-                  icon: Wallet, 
-                  label: "Boshlang'ich sarmoya", 
-                  value: `${(investment / 1000000).toFixed(1)}M`,
-                  suffix: "so'm",
-                  color: "text-foreground"
-                },
-                { 
-                  icon: TrendingUp, 
-                  label: "Yillik daromad", 
-                  value: `${(yearlyRevenue / 1000000).toFixed(1)}M`,
-                  suffix: "so'm",
-                  color: "text-accent"
-                },
-                { 
-                  icon: TrendingUp, 
-                  label: "Sof foyda", 
-                  value: `${(yearlyProfit / 1000000).toFixed(1)}M`,
-                  suffix: "so'm",
-                  color: "text-accent"
-                },
-                { 
-                  icon: Calendar, 
-                  label: "O'zini qoplash", 
-                  value: paybackMonths,
-                  suffix: "oy",
-                  color: "text-accent"
-                },
-              ].map((item, index) => (
+              {calculations.map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
-                  className="glass-card rounded-2xl p-6 text-center border border-border/50"
+                  className={`glass-card rounded-2xl p-6 text-center border border-border/50 cursor-pointer hover:border-accent/50 transition-all ${
+                    selectedSquare === index ? 'border-accent bg-accent/5' : ''
+                  }`}
+                  onClick={() => setSelectedSquare(selectedSquare === index ? null : index)}
                 >
-                  <item.icon className="w-8 h-8 mx-auto mb-4 text-accent/70" />
+                  <Info className="w-6 h-6 mx-auto mb-3 text-accent/70" />
                   <div className={`text-3xl md:text-4xl font-bold ${item.color} mb-1`}>
                     {item.value}
                   </div>
                   <div className="text-sm text-muted-foreground">{item.suffix}</div>
                   <div className="text-sm text-muted-foreground mt-2">{item.label}</div>
+                  
+                  {selectedSquare === index && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      className="mt-4 p-4 bg-background/50 rounded-lg text-left"
+                    >
+                      <div className="text-xs font-bold text-accent mb-2">
+                        {item.formula}
+                      </div>
+                      <div className="text-xs text-muted-foreground mb-3">
+                        {item.explanation}
+                      </div>
+                      <div className="space-y-1">
+                        {item.breakdown.map((line, i) => (
+                          <div key={i} className="text-xs font-mono text-foreground/80">
+                            {line}
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
                 </motion.div>
               ))}
             </div>
 
-            {/* ROI Highlight */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="mt-10 text-center p-8 rounded-2xl bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 border border-accent/30"
-            >
-              <div className="text-muted-foreground mb-2">Yillik ROI (investitsiya qaytimi)</div>
-              <div className="text-6xl md:text-7xl font-bold text-gradient-gold mb-4">{roi}%</div>
-              <p className="text-muted-foreground max-w-xl mx-auto">
-                Bu degani har 100 ming so'm sarmoyaningiz {roi / 100} barobar foyda keltiradi. 
-                Bank foizlari bilan solishtirib ko'ring!
-              </p>
-            </motion.div>
 
-            {/* CTA */}
+
+
+            {/* Marketing CTA */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 1.1, duration: 0.6 }}
-              className="mt-10 text-center"
+              transition={{ delay: 1.0, duration: 0.8 }}
+              className="mt-12 p-8 rounded-3xl bg-gradient-to-br from-red-500/10 via-orange-500/10 to-yellow-500/10 border-2 border-orange-400/30 relative overflow-hidden"
             >
-              <a href="#order" className="btn-premium inline-flex items-center gap-3">
-                <span className="relative z-10">Hoziroq Boshlang</span>
-                <ChevronRight className="w-5 h-5 relative z-10" />
-              </a>
-              <p className="text-muted-foreground text-sm mt-4">
-                * Hisob-kitoblar o'rtacha ko'rsatkichlarga asoslangan
-              </p>
+              <div className="relative z-10 text-center">
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-4xl mb-4"
+                >
+                  ⚡
+                </motion.div>
+                
+                <div className="space-y-4 mb-8">
+                  {plants < 500 ? (
+                    <>
+                      <p className="text-lg text-foreground leading-relaxed">
+                        🎉 <span className="font-bold text-green-400">Ajoyib tanlov!</span> Sizning oilangiz 
+                        <span className="font-bold text-accent">sog'lom va tabiiy malina</span> bilan ta'minlanadi. 
+                        Bog'ingizda o'sadigan bu <span className="font-bold text-blue-400">premium mevalar</span> 
+                        bolalaringiz uchun eng yaxshi tabiiy shirinlik bo'ladi!
+                      </p>
+                      
+                      <p className="text-lg text-foreground leading-relaxed">
+                        Bundan tashqari, yiliga <span className="font-bold text-accent">{yearlyIncome >= 1000000000 ? `${(yearlyIncome / 1000000000).toFixed(1)} milliard` : `${(yearlyIncome / 1000000).toFixed(0)} million`} so'm</span> 
+                        qo'shimcha daromad ham olasiz. Bog'ingiz ham chiroyli, oilangiz ham sog'lom, 
+                        moliyaviy holingiz ham yaxshi bo'ladi!
+                      </p>
+                    </>
+                  ) : plants < 5000 ? (
+                    <>
+                      <p className="text-lg text-foreground leading-relaxed">
+                        💼 <span className="font-bold text-blue-400">Eng yaxshi 2-chi daromad manbai!</span> 
+                        Bu sizning asosiy ishingizga <span className="font-bold text-green-400">ajoyib qo'shimcha</span> bo'ladi. 
+                        Yiliga <span className="font-bold text-accent">{yearlyIncome >= 1000000000 ? `${(yearlyIncome / 1000000000).toFixed(1)} milliard` : `${(yearlyIncome / 1000000).toFixed(0)} million`} so'm</span> 
+                        barqaror qo'shimcha daromad olasiz!
+                      </p>
+                      
+                      <p className="text-lg text-foreground leading-relaxed">
+                        Bu <span className="font-bold text-blue-400">$500/oy</span> o'rtacha maosh bilan 
+                        <span className="font-bold text-red-400 text-xl">{Math.ceil(yearlyIncome / 66000000)} yil</span> 
+                        ishlashga teng. Lekin siz buni faqat <span className="font-bold text-green-400">1 yilda</span> olasiz!
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-lg text-foreground leading-relaxed">
+                        Agar siz <span className="font-bold text-blue-400">O'zbekistonning o'rtacha maoshi</span> bilan ishlasangiz, 
+                        masalan, <span className="font-bold text-green-400">$500/oy (≈ 5.5 million so'm)</span>, 
+                        shu <span className="font-bold text-accent">{yearlyIncome >= 1000000000 ? `${(yearlyIncome / 1000000000).toFixed(1)} milliard` : `${(yearlyIncome / 1000000).toFixed(0)} million`} so'm</span> daromadga 
+                        erishish uchun sizga <span className="font-bold text-red-400 text-2xl">≈ {Math.ceil(yearlyIncome / 66000000)} yil</span> mehnat qilish kerak bo'ladi.
+                      </p>
+                      
+                      <p className="text-lg text-foreground leading-relaxed">
+                        "Biz esa sizga shu <span className="font-bold text-blue-400">kalkulyator orqali 1 daqiqada</span> foydangizni nazorat qilish, 
+                        <span className="font-bold text-red-400 text-xl"> {Math.ceil(yearlyIncome / 66000000)} yil</span> vaqtingizni tejash va 
+                        shu pulni faqatgina <span className="font-bold text-green-400">1 yilda</span> topish imkoniyatini taqdim etmoqdamiz!"
+                      </p>
+                    </>
+                  )}
+                </div>
+
+                <motion.a
+                  href="#order"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-4 px-16 py-6 rounded-3xl border-4 border-orange-500 bg-transparent text-orange-500 hover:text-white hover:bg-orange-500 font-bold text-2xl transition-all duration-300 relative overflow-hidden group"
+                >
+                  <span className="text-3xl">🚀</span>
+                  <span className="relative z-10 tracking-wide">HOZIROQ BOSHLANG!</span>
+                  <span className="text-3xl">💰</span>
+                </motion.a>
+                
+                <p className="text-muted-foreground text-sm mt-6">
+                  * Hisob-kitoblar 2xil nav uchun o'rtacha hisoblangan
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         </div>

@@ -22,7 +22,11 @@ const OrderSection = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('http://localhost:3001/apply', {
+      // Try to get the current host for mobile compatibility
+      const host = window.location.hostname;
+      const apiUrl = host === 'localhost' ? 'http://localhost:3001/apply' : `http://${host}:3001/apply`;
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,22 +35,27 @@ const OrderSection = () => {
           name: formData.name,
           phone: formData.phone,
           region: formData.region,
-          quantity: parseInt(formData.plants),
+          quantity: parseInt(formData.plants) || 0,
           product: formData.type === 'maravilla' ? 'Maravilla' : formData.type === 'enrasadera' ? 'Enrasadera' : 'Ikkalasi',
-          message: formData.message
+          message: formData.message || ''
         })
       });
       
-      if (response.ok) {
-        toast.success("Arizangiz qabul qilindi! Tez orada bog'lanamiz.", {
-          description: "Rahmat, sizning ishonchingiz uchun!",
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        toast.success("✅ Telegram xabar yuborildi!", {
+          description: "Arizangiz qabul qilindi. Tez orada bog'lanamiz.",
         });
         setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
       } else {
-        throw new Error('Failed to submit');
+        throw new Error(result.error || 'Server error');
       }
     } catch (error) {
-      toast.error("Xatolik yuz berdi. Iltimos qaytadan urinib ko'ring.");
+      console.error('Form submission error:', error);
+      toast.error("❌ Xatolik: Telegram xabar yuborilmadi", {
+        description: "Iltimos telefon orqali bog'laning: +998 93 127 57 37",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -91,15 +100,15 @@ const OrderSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto px-4">
           {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-8 md:p-10 border border-border/50">
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-6 md:p-8 lg:p-10 border border-border/50">
+              <div className="grid gap-6 mb-6">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Ismingiz *</label>
                   <input
@@ -107,7 +116,7 @@ const OrderSection = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                    className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all text-lg"
                     placeholder="Ismingizni kiriting"
                   />
                 </div>
@@ -118,13 +127,13 @@ const OrderSection = () => {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all"
-                    placeholder="+998 90 123 45 67"
+                    className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all text-lg"
+                    placeholder="+998 93 127 57 37"
                   />
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="grid gap-6 mb-6">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Viloyat *</label>
                   <input
@@ -132,7 +141,7 @@ const OrderSection = () => {
                     required
                     value={formData.region}
                     onChange={(e) => setFormData({ ...formData, region: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                    className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all text-lg"
                     placeholder="Masalan: Toshkent"
                   />
                 </div>
@@ -144,7 +153,7 @@ const OrderSection = () => {
                     min="50"
                     value={formData.plants}
                     onChange={(e) => setFormData({ ...formData, plants: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                    className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all text-lg"
                     placeholder="Minimum 50 ta"
                   />
                 </div>
@@ -152,7 +161,7 @@ const OrderSection = () => {
 
               <div className="mb-6">
                 <label className="block text-sm font-medium text-foreground mb-2">Nav tanlang *</label>
-                <div className="flex gap-4">
+                <div className="grid gap-3">
                   {[
                     { id: "maravilla", name: "Maravilla" },
                     { id: "enrasadera", name: "Enrasadera" },
@@ -160,7 +169,7 @@ const OrderSection = () => {
                   ].map((type) => (
                     <label
                       key={type.id}
-                      className={`flex-1 text-center py-3 px-4 rounded-xl cursor-pointer border transition-all ${
+                      className={`text-center py-4 px-4 rounded-xl cursor-pointer border-2 transition-all text-lg font-medium ${
                         formData.type === type.id
                           ? "border-accent bg-accent/10 text-accent"
                           : "border-border/50 text-muted-foreground hover:border-accent/50"
@@ -185,8 +194,8 @@ const OrderSection = () => {
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={3}
-                  className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none"
+                  rows={4}
+                  className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none text-lg"
                   placeholder="Savollaringiz yoki istaklaringiz..."
                 />
               </div>
@@ -196,9 +205,9 @@ const OrderSection = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                className={`w-full btn-premium flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                className={`w-full btn-premium flex items-center justify-center gap-3 py-5 text-xl ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
-                <Send className="w-5 h-5 relative z-10" />
+                <Send className="w-6 h-6 relative z-10" />
                 <span className="relative z-10">{isSubmitting ? 'Yuborilmoqda...' : 'Ariza Yuborish'}</span>
               </motion.button>
             </form>
@@ -218,19 +227,19 @@ const OrderSection = () => {
               </h3>
               <div className="space-y-4">
                 <a
-                  href="tel:+998901234567"
+                  href="tel:+998931275737"
                   className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all group"
                 >
                   <div className="w-12 h-12 rounded-full bg-secondary/50 flex items-center justify-center group-hover:bg-accent/20 transition-all">
                     <Phone className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <div className="text-foreground font-medium">+998 90 123 45 67</div>
+                    <div className="text-foreground font-medium">+998 93 127 57 37</div>
                     <div className="text-sm text-muted-foreground">Har kuni 9:00 - 21:00</div>
                   </div>
                 </a>
                 <a
-                  href="https://t.me/malina_uz"
+                  href="https://t.me/malinalar_uz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all group"
@@ -239,7 +248,7 @@ const OrderSection = () => {
                     <MessageCircle className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <div className="text-foreground font-medium">Telegram: @malina_uz</div>
+                    <div className="text-foreground font-medium">Telegram: @malinalar_uz</div>
                     <div className="text-sm text-muted-foreground">Tez javob olish uchun</div>
                   </div>
                 </a>
@@ -248,8 +257,8 @@ const OrderSection = () => {
                     <MapPin className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <div className="text-foreground font-medium">Toshkent, Chilonzor tumani</div>
-                    <div className="text-sm text-muted-foreground">Asosiy pitomnik</div>
+                    <div className="text-foreground font-medium">Toshkent viloyati, Angren shahri</div>
+                    <div className="text-sm text-muted-foreground">Asosiy punkt</div>
                   </div>
                 </div>
               </div>
@@ -265,7 +274,6 @@ const OrderSection = () => {
                   "100% tirik nihollar kafolati",
                   "Bepul maslahat va qo'llanma",
                   "1000+ niholga bepul yetkazib berish",
-                  "Nobud bo'lgan nihollar almashtiriladi",
                   "To'lov faqat qabul qilgandan keyin",
                 ].map((item, index) => (
                   <motion.li

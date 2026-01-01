@@ -44,7 +44,7 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-foreground/80 hover:text-accent transition-colors font-medium"
+                className="text-foreground/80 hover:text-accent transition-colors font-serif text-lg font-medium"
               >
                 {link.label}
               </a>
@@ -63,10 +63,10 @@ const Navbar = () => {
             </button>
             
             <a
-              href="tel:+998901234567"
+              href="#order"
               className="btn-premium py-2.5 px-6 text-sm"
             >
-              <span className="relative z-10">+998 90 123 45 67</span>
+              <span className="relative z-10">Ariza Berish</span>
             </a>
           </div>
 
@@ -99,7 +99,7 @@ const Navbar = () => {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-foreground/80 hover:text-accent transition-colors font-medium py-2"
+                  className="text-foreground/80 hover:text-accent transition-colors font-serif text-lg font-medium py-2"
                 >
                   {link.label}
                 </a>
@@ -119,10 +119,10 @@ const Navbar = () => {
               </button>
               
               <a
-                href="tel:+998901234567"
+                href="#order"
                 className="btn-premium py-3 text-center mt-2"
               >
-                <span className="relative z-10">+998 90 123 45 67</span>
+                <span className="relative z-10">Ariza Berish</span>
               </a>
             </div>
           </div>

@@ -157,7 +157,7 @@ const StatsSection = () => {
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 px-4">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
@@ -170,7 +170,7 @@ const StatsSection = () => {
                 onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full glass-card rounded-3xl p-8 text-center group transition-all duration-500 cursor-pointer border-2 ${
+                className={`w-full glass-card rounded-3xl p-6 md:p-8 text-center group transition-all duration-500 cursor-pointer border-2 ${
                   expandedIndex === index 
                     ? 'border-accent glow-gold bg-gradient-to-br from-accent/10 to-secondary/10' 
                     : 'border-accent/20 hover:border-accent/40 hover:glow-gold'
@@ -179,19 +179,19 @@ const StatsSection = () => {
                 <motion.div
                   whileHover={{ scale: 1.15, rotate: 10 }}
                   transition={{ duration: 0.3 }}
-                  className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-accent/30 to-secondary/40 flex items-center justify-center shadow-lg"
+                  className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 md:mb-6 rounded-2xl bg-gradient-to-br from-accent/30 to-secondary/40 flex items-center justify-center shadow-lg"
                 >
-                  <stat.icon className="w-10 h-10 text-accent" />
+                  <stat.icon className="w-8 h-8 md:w-10 md:h-10 text-accent" />
                 </motion.div>
-                <div className="text-5xl md:text-6xl font-bold text-accent mb-3 leading-none">
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-accent mb-2 md:mb-3 leading-none">
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="text-foreground/80 font-semibold text-lg">{stat.label}</div>
+                <div className="text-foreground/80 font-semibold text-base md:text-lg">{stat.label}</div>
                 <motion.div
                   animate={{ rotate: expandedIndex === index ? 180 : 0 }}
-                  className="mt-6"
+                  className="mt-4 md:mt-6"
                 >
-                  <ChevronDown className="w-6 h-6 text-accent mx-auto" />
+                  <ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-accent mx-auto" />
                 </motion.div>
               </motion.button>
             </motion.div>

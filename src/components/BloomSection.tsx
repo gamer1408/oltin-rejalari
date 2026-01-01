@@ -4,10 +4,10 @@ import bloomImage from "@/assets/raspberry-bloom.jpg";
 import { Leaf, Sun, Droplets, Wind } from "lucide-react";
 
 const features = [
-  { icon: Sun, title: "Iyun-Iyul", desc: "Gullash davri" },
-  { icon: Droplets, title: "Iyul-Sentabr", desc: "Birinchi hosil" },
-  { icon: Leaf, title: "Sentabr-Oktabr", desc: "Ikkinchi hosil" },
-  { icon: Wind, title: "Noyabr-Fevral", desc: "Dam olish davri" },
+  { icon: Sun, title: "Aprel-May", desc: "Gullash davri" },
+  { icon: Droplets, title: "Iyun-Iyul", desc: "Birinchi hosil davri" },
+  { icon: Leaf, title: "Avgust-Sentabr", desc: "2-chi hosil davri" },
+  { icon: Wind, title: "Oktabr-Dekabr", desc: "3-chi hosil davri" },
 ];
 
 const BloomSection = () => {
@@ -94,11 +94,11 @@ const BloomSection = () => {
             className="glass-card rounded-3xl p-10 border border-accent/20"
           >
             <p className="font-serif text-2xl md:text-3xl text-foreground italic mb-6">
-              "Malina — eng kam mehnat talab qiladigan, lekin eng yuqori daromad beradigan meva. 
-              Bir marta eking, 5-7 yil davomida foyda oling."
+              "Malina — mehnat talab qiladigan, lekin eng yuqori daromad beradigan meva. 
+              Bir marta eking, 15-20 yil davomida foyda oling."
             </p>
             <footer className="text-accent font-medium">
-              — 3 yillik tajribamiz xulosasi
+              — Tajribamiz hulosasi
             </footer>
           </motion.blockquote>
         </div>

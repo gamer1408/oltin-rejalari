@@ -22,7 +22,7 @@ const reasons = [
   {
     icon: ShieldCheck,
     title: "100% Kafolat",
-    description: "Har bir nihol tirik yetkazilishi kafolatlanadi. Nobud bo'lganlar almashtriladi.",
+    description: "Har bir nihol tirik yetkazilishi kafolatlanadi.",
   },
   {
     icon: Heart,

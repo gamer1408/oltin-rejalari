@@ -6,6 +6,14 @@ import maravillaImage from "@/assets/maravilla-raspberry.jpg";
 import enrasaderaImage from "@/assets/enrasadera-raspberry.jpg";
 import raspberryBloomImage from "@/assets/raspberry-bloom.jpg";
 import heroImage from "@/assets/hero-raspberry-field.jpg";
+import enrasadira1 from "@/assets/enrasadira.jpg";
+import enrasadira2 from "@/assets/enrasadira1.jpg";
+import enrasadira3 from "@/assets/enrasadira2.jpg";
+import enrasadira4 from "@/assets/enrasadira3.jpg";
+import maravila1 from "@/assets/maravila.jpg";
+import maravila2 from "@/assets/maravila.jpg1.jpg";
+import maravila3 from "@/assets/marvila2.jpg";
+import maravilla3 from "@/assets/maravilla3.jpg";
 
 type GalleryItem = {
   type: "image" | "video";
@@ -18,128 +26,113 @@ type GalleryItem = {
 };
 
 const galleryItems: GalleryItem[] = [
-  // Maravilla 1 Hectare
-  {
-    type: "video",
-    src: "https://player.vimeo.com/video/824804225?autoplay=1&muted=1",
-    thumbnail: maravillaImage,
-    title: "Maravilla - 1 Gektar",
-    description: "Tomchi sug'orish tizimi bilan jihozlangan 1 gektarlik Maravilla plantatsiyasi",
-    category: "maravilla-1ha",
-    area: "1 Gektar"
-  },
+  // Maravilla
   {
     type: "image",
     src: heroImage,
     thumbnail: heroImage,
-    title: "Qatorlar - 1 Gektar",
+    title: "Maravilla qatorlari",
     description: "Malina qatorlari orasidagi yo'laklar va tomchi sug'orish liniyalari",
-    category: "maravilla-1ha",
-    area: "1 Gektar"
+    category: "maravilla",
+    area: "Maravilla"
   },
   {
     type: "image",
     src: maravillaImage,
     thumbnail: maravillaImage,
-    title: "Hosil yig'ish",
+    title: "Maravilla hosili",
     description: "Maravilla navidan hosil yig'ish jarayoni",
-    category: "maravilla-1ha",
-    area: "1 Gektar"
-  },
-  // Maravilla 12 Sotix
-  {
-    type: "video",
-    src: "https://player.vimeo.com/video/824804225?autoplay=1&muted=1",
-    thumbnail: raspberryBloomImage,
-    title: "Maravilla - 12 Sotix",
-    description: "Kichik fermer xo'jaligida 12 sotixlik Maravilla plantatsiyasi",
-    category: "maravilla-12sotix",
-    area: "12 Sotix"
+    category: "maravilla",
+    area: "Maravilla"
   },
   {
     type: "image",
-    src: raspberryBloomImage,
-    thumbnail: raspberryBloomImage,
-    title: "Gullash davri",
-    description: "12 sotixlik maydonda gullash bosqichi",
-    category: "maravilla-12sotix",
-    area: "12 Sotix"
-  },
-  // Enrasadera 1 Hectare  
-  {
-    type: "video",
-    src: "https://player.vimeo.com/video/824804225?autoplay=1&muted=1",
-    thumbnail: enrasaderaImage,
-    title: "Enrasadera - 1 Gektar",
-    description: "Tirmaladigan Enrasadera navi bilan 1 gektarlik plantatsiya",
-    category: "enrasadera-1ha",
-    area: "1 Gektar"
+    src: maravila1,
+    thumbnail: maravila1,
+    title: "Maravilla plantatsiyasi",
+    description: "Maravilla navining o'sish jarayoni",
+    category: "maravilla",
+    area: "Maravilla"
   },
   {
     type: "image",
-    src: enrasaderaImage,
-    thumbnail: enrasaderaImage,
-    title: "Vertikal o'sish",
-    description: "Enrasadera navining vertikal o'sish tizimi",
-    category: "enrasadera-1ha",
-    area: "1 Gektar"
-  },
-  // Cultivation Process
-  {
-    type: "video",
-    src: "https://player.vimeo.com/video/824804225?autoplay=1&muted=1",
-    thumbnail: heroImage,
-    title: "Tomchi sug'orish",
-    description: "Uzun qatorlar bo'ylab tomchi sug'orish liniyalari",
-    category: "cultivation",
-    area: "Texnologiya"
+    src: maravila2,
+    thumbnail: maravila2,
+    title: "Maravilla mevasi",
+    description: "Pishgan Maravilla mevalarining ko'rinishi",
+    category: "maravilla",
+    area: "Maravilla"
   },
   {
     type: "image",
-    src: maravillaImage,
-    thumbnail: maravillaImage,
-    title: "Tayanchlar va arqonlar",
-    description: "Malina butalarining balandligi va shaklini saqlash uchun tayanchlar",
-    category: "cultivation",
-    area: "Texnologiya"
+    src: maravila3,
+    thumbnail: maravila3,
+    title: "Maravilla bog'i",
+    description: "Maravilla plantatsiyasining umumiy ko'rinishi",
+    category: "maravilla",
+    area: "Maravilla"
   },
-  {
-    type: "video",
-    src: "https://player.vimeo.com/video/824804225?autoplay=1&muted=1",
-    thumbnail: raspberryBloomImage,
-    title: "Parvarishlash",
-    description: "Kundalik parvarishlash jarayonlari",
-    category: "cultivation",
-    area: "Texnologiya"
-  },
-  // Results
   {
     type: "image",
-    src: heroImage,
-    thumbnail: heroImage,
-    title: "Katta hosil",
-    description: "Birinchi yilda olingan katta hosil",
-    category: "results",
-    area: "Natijalar"
+    src: maravilla3,
+    thumbnail: maravilla3,
+    title: "Maravilla hosildorligi",
+    description: "Yuqori hosildor Maravilla tupi",
+    category: "maravilla",
+    area: "Maravilla"
   },
+  // Enrasadira
   {
     type: "image",
     src: enrasaderaImage,
     thumbnail: enrasaderaImage,
-    title: "Sifatli mevalar",
-    description: "Premium sifatli, katta va shirali mevalar",
-    category: "results",
-    area: "Natijalar"
+    title: "Enrasadira o'sishi",
+    description: "Enrasadira navining o'sish tizimi",
+    category: "enrasadira",
+    area: "Enrasadira"
+  },
+  {
+    type: "image",
+    src: enrasadira1,
+    thumbnail: enrasadira1,
+    title: "Enrasadira plantatsiyasi",
+    description: "Enrasadira navining bog'dagi ko'rinishi",
+    category: "enrasadira",
+    area: "Enrasadira"
+  },
+  {
+    type: "image",
+    src: enrasadira2,
+    thumbnail: enrasadira2,
+    title: "Enrasadira mevasi",
+    description: "Pishgan Enrasadira mevalarining rangi va shakli",
+    category: "enrasadira",
+    area: "Enrasadira"
+  },
+  {
+    type: "image",
+    src: enrasadira3,
+    thumbnail: enrasadira3,
+    title: "Enrasadira hosili",
+    description: "Enrasadira navidan olingan hosil",
+    category: "enrasadira",
+    area: "Enrasadira"
+  },
+  {
+    type: "image",
+    src: enrasadira4,
+    thumbnail: enrasadira4,
+    title: "Enrasadira bog'i",
+    description: "Enrasadira plantatsiyasining umumiy manzarasi",
+    category: "enrasadira",
+    area: "Enrasadira"
   },
 ];
 
 const categories = [
   { id: "all", label: "Barchasi" },
-  { id: "maravilla-1ha", label: "Maravilla 1 Ga" },
-  { id: "maravilla-12sotix", label: "Maravilla 12 Sotix" },
-  { id: "enrasadera-1ha", label: "Enrasadera 1 Ga" },
-  { id: "cultivation", label: "Etishtirish" },
-  { id: "results", label: "Natijalar" },
+  { id: "maravilla", label: "Maravilla" },
+  { id: "enrasadira", label: "Enrasadira" },
 ];
 
 const GallerySection = () => {
@@ -197,16 +190,16 @@ const GallerySection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-2 mb-16"
         >
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                 selectedCategory === category.id
                   ? "bg-accent text-accent-foreground shadow-lg"
-                  : "glass-card text-muted-foreground hover:text-foreground border border-border/30"
+                  : "bg-card text-foreground hover:bg-accent/10 border border-border shadow-sm"
               }`}
             >
               {category.label}
@@ -217,62 +210,62 @@ const GallerySection = () => {
         {/* Gallery Grid */}
         <motion.div
           layout
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
           {filteredItems.map((item, index) => (
             <motion.div
               key={`${item.category}-${index}`}
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className={`relative group cursor-pointer overflow-hidden rounded-2xl ${
-                index % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
-              }`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group cursor-pointer"
               onClick={() => openLightbox(item, index)}
             >
-              <div className={`relative ${index % 5 === 0 ? "aspect-square" : "aspect-video"} overflow-hidden`}>
-                <img
-                  src={item.thumbnail}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                {/* Video Icon */}
-                {item.type === "video" && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="w-16 h-16 rounded-full bg-accent/90 backdrop-blur-sm flex items-center justify-center shadow-xl"
-                    >
-                      <Play className="w-7 h-7 text-accent-foreground ml-1" fill="currentColor" />
-                    </motion.div>
+              <div className="relative overflow-hidden rounded-2xl bg-card border border-border shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  
+                  {/* Professional Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Category Badge */}
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1 bg-accent/90 backdrop-blur-sm rounded-full text-xs font-semibold text-accent-foreground shadow-sm">
+                      {item.area}
+                    </span>
                   </div>
-                )}
 
-                {/* Info Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <div className="flex items-center gap-2 mb-2">
-                    {item.area && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-accent/80 text-accent-foreground text-xs font-medium">
-                        <Ruler className="w-3 h-3" />
-                        {item.area}
-                      </span>
-                    )}
+                  {/* Expand Icon */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-8 h-8 bg-background/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm border border-border">
+                      <Maximize2 className="w-4 h-4 text-foreground" />
+                    </div>
                   </div>
-                  <h4 className="text-foreground font-semibold text-sm mb-1">{item.title}</h4>
-                  <p className="text-foreground/70 text-xs line-clamp-2">{item.description}</p>
+
+                  {/* Video Icon */}
+                  {item.type === "video" && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 bg-accent/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
+                        <Play className="w-6 h-6 text-accent-foreground ml-1" fill="currentColor" />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Expand Icon */}
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="w-8 h-8 rounded-full bg-background/50 backdrop-blur-sm flex items-center justify-center">
-                    <Maximize2 className="w-4 h-4 text-foreground" />
-                  </div>
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="font-serif text-lg font-bold text-foreground mb-2 line-clamp-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
+                    {item.description}
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -295,7 +288,7 @@ const GallerySection = () => {
                 Bizning etishtirish usulimiz
               </h4>
               <p className="text-muted-foreground">
-                Qatorlar orasida 2.5-3 metr masofa, tomchi sug'orish liniyalari, metal yoki yog'och tayanchlar,
+                Qatorlar orasida 1.5-2 metr masofa, 0.5 metr qatorasiga, tomchi sug'orish liniyalari, metal yoki yog'och tayanchlar,
                 va arqonlar bilan butalarning balandligi va shaklini saqlash — bu bizning professional texnologiyamiz.
               </p>
             </div>

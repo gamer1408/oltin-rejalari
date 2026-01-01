@@ -9,37 +9,43 @@ import enrasaderaImage from "@/assets/enrasadera-raspberry.jpg";
 const products = [
   {
     name: "Maravilla",
-    tagline: "Eng yuqori hosildor nav",
+    tagline: "O'rtacha hosildorlik",
     images: [maravillaImage, enrasaderaImage, maravillaImage, enrasaderaImage],
-    price: "15,000",
-    originalPrice: "20,000",
+    price: "30,000",
+    originalPrice: "45,000",
     features: [
-      "Yiliga 2 marta hosil beradi",
-      "1 tup — 3-5 kg meva",
-      "Sovuqqa chidamli (-25°C)",
+      "5-6 oy hosildorlik",
+      "1 tup — 10kg meva (<15kg)",
+      "Meva og'irligi — 10g-14g",
+      "Sovuqqa chidamli (-30°C)",
       "Katta, shirali mevalar",
-      "5 yil hosildorlik",
+      "10 yil hosildorlik",
+      "Bozordagi narxi — 65 ming so'm (eng kamida)",
+      "Har yili 5ta ko'chat (<15)",
     ],
     roi: "350%",
-    popular: true,
+    popular: false,
     color: "from-primary/20 to-primary/5",
     borderColor: "border-primary/30",
   },
   {
     name: "Enrasadera",
-    tagline: "Tirmaladigan nav — kam joy",
+    tagline: "Hosildor",
     images: [enrasaderaImage, maravillaImage, enrasaderaImage, maravillaImage],
-    price: "12,000",
-    originalPrice: "16,000",
+    price: "30,000",
+    originalPrice: "45,000",
     features: [
-      "Vertikal o'sadi — joy tejaydi",
-      "1 tup — 2-4 kg meva",
-      "Issiqqa chidamli",
-      "Kasalliklarga bardoshli",
-      "7 yil hosildorlik",
+      "6-7 oy hosil",
+      "1 tup — 20kg meva (<30kg)",
+      "Meva og'irligi — 7g-14g",
+      "Sovuqqa chidamli (-30°C)",
+      "Normal hajm, suvli, mazali",
+      "10 yil hosildorlik",
+      "Bozorda — 50 ming so'm (kamida)",
+      "Har yili 10ta ko'chat (<20)",
     ],
     roi: "280%",
-    popular: false,
+    popular: true,
     color: "from-secondary/30 to-secondary/5",
     borderColor: "border-secondary/30",
   },
@@ -159,7 +165,7 @@ const ProductsSection = () => {
         </motion.div>
 
         {/* Products Grid */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto px-4">
           {products.map((product, index) => (
             <motion.div
               key={product.name}
@@ -181,24 +187,24 @@ const ProductsSection = () => {
                 </motion.div>
               )}
 
-              <div className={`glass-card rounded-3xl overflow-hidden border ${product.borderColor} group-hover:glow-raspberry transition-all duration-500`}>
+              <div className={`glass-card rounded-2xl overflow-hidden border-2 ${product.borderColor} group-hover:border-accent/60 group-hover:shadow-2xl group-hover:shadow-accent/20 transition-all duration-500 bg-gradient-to-br ${product.color} backdrop-blur-xl`}>
                 {/* Image Carousel */}
                 <ImageCarousel images={product.images} productName={product.name} color={product.color} />
                 
                 {/* ROI Badge */}
                 <div className="relative">
-                  <div className="absolute -top-10 left-4 flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-accent/30 z-10">
+                  <div className="absolute -top-10 left-4 flex items-center gap-2 px-4 py-2 rounded-full glass-card border-2 border-accent/40 bg-accent/10 backdrop-blur-sm z-10">
                     <TrendingUp className="w-4 h-4 text-accent" />
                     <span className="text-accent font-bold">{product.roi} ROI</span>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-8 pt-6">
-                  <h3 className="font-serif text-3xl font-bold text-foreground mb-2">
+                <div className="p-6 md:p-8 pt-6">
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
                     {product.name}
                   </h3>
-                  <p className="text-muted-foreground mb-6">{product.tagline}</p>
+                  <p className="text-muted-foreground mb-6 text-lg">{product.tagline}</p>
 
                   {/* Features */}
                   <ul className="space-y-3 mb-8">
@@ -208,29 +214,29 @@ const ProductsSection = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={isInView ? { opacity: 1, x: 0 } : {}}
                         transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
-                        className="flex items-center gap-3 text-foreground/80"
+                        className="flex items-center gap-3 text-foreground/90"
                       >
-                        <div className="w-5 h-5 rounded-full bg-secondary/50 flex items-center justify-center flex-shrink-0">
-                          <Check className="w-3 h-3 text-accent" />
+                        <div className="w-6 h-6 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center flex-shrink-0">
+                          <Check className="w-4 h-4 text-accent" />
                         </div>
-                        {feature}
+                        <span className="text-sm md:text-base font-medium">{feature}</span>
                       </motion.li>
                     ))}
                   </ul>
 
                   {/* Price */}
-                  <div className="flex items-end gap-3 mb-6">
-                    <span className="text-4xl font-bold text-accent">{product.price}</span>
-                    <span className="text-muted-foreground">so'm / nihal</span>
-                    <span className="text-muted-foreground line-through ml-auto">{product.originalPrice}</span>
+                  <div className="flex items-end gap-3 mb-6 p-4 rounded-xl bg-background/50 border border-accent/20">
+                    <span className="text-3xl md:text-4xl font-bold text-accent">{product.price}</span>
+                    <span className="text-muted-foreground text-sm md:text-base font-medium">so'm / nihal</span>
+                    <span className="text-muted-foreground line-through ml-auto text-sm md:text-base">{product.originalPrice}</span>
                   </div>
 
                   {/* CTA */}
                   <motion.a
                     href="#order"
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className="block w-full btn-premium text-center"
+                    className="block w-full btn-premium text-center py-4 text-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <span className="relative z-10">Buyurtma Berish</span>
                   </motion.a>
@@ -240,28 +246,63 @@ const ProductsSection = () => {
           ))}
         </div>
 
-        {/* Free Shipping Banner */}
+        {/* Choice Message & CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="mt-16 max-w-4xl mx-auto"
+          transition={{ delay: 1.0, duration: 0.8 }}
+          className="mt-20 max-w-4xl mx-auto"
         >
-          <div className="glass-card rounded-3xl p-8 md:p-12 text-center border border-accent/30 glow-gold">
+          <div className="glass-card rounded-3xl p-10 md:p-12 text-center border-2 border-accent/30 bg-gradient-to-br from-accent/5 to-secondary/5">
             <motion.div
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-accent/20 mb-6"
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              className="text-6xl mb-6"
             >
-              <span className="text-4xl">🚚</span>
+              🍓
             </motion.div>
-            <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-              1000+ Niholga <span className="text-gradient-gold">BEPUL YETKAZIB BERISH!</span>
-            </h3>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              O'zbekistonning istalgan nuqtasiga — Toshkentdan Nukusgacha, Farg'onadan Xorazmgacha. 
-              Har bir nihol ehtiyotkorlik bilan qadoqlangan holda yetkaziladi.
-            </p>
+            
+            <div className="space-y-4 mb-8">
+              <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
+                🍓 Maravilla yoki Enrasadera?
+              </h3>
+              <p className="text-xl text-accent font-semibold">
+                💰 Narxi bir xil.
+              </p>
+              <p className="text-xl text-foreground/80">
+                📈 Foydasi — strategiyaga bog'liq.
+              </p>
+              
+              <div className="border-t border-accent/20 pt-6 mt-6">
+                <p className="text-lg text-foreground font-medium mb-2">
+                  Biz nav sotmaymiz.
+                </p>
+                <p className="text-xl text-accent font-bold">
+                  Biz foyda yo'lini taklif qilamiz.
+                </p>
+              </div>
+              
+              <p className="text-lg text-foreground/70 mt-6">
+                👇 Ariza qoldiring.
+              </p>
+            </div>
+
+            <motion.a
+              href="#order"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent via-accent to-secondary text-accent-foreground font-bold text-lg shadow-2xl hover:shadow-accent/25 transition-all duration-300 relative overflow-hidden group"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-accent/80 to-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="relative z-10">✨ Ariza Yuborish</span>
+              <motion.span
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="relative z-10"
+              >
+                →
+              </motion.span>
+            </motion.a>
           </div>
         </motion.div>
       </div>
