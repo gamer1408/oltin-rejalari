@@ -296,13 +296,24 @@ const CalculatorSection = () => {
 
                 <motion.a
                   href="#order"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-4 px-16 py-6 rounded-3xl border-4 border-orange-500 bg-transparent text-orange-500 hover:text-white hover:bg-orange-500 font-bold text-2xl transition-all duration-300 relative overflow-hidden group"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="block w-full max-w-md mx-auto sm:max-w-none sm:inline-flex sm:w-auto items-center justify-center gap-2 sm:gap-3 px-6 sm:px-12 py-4 sm:py-5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 hover:from-orange-600 hover:via-red-600 hover:to-pink-600 text-white font-bold text-base sm:text-xl lg:text-2xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 relative overflow-hidden group"
                 >
-                  <span className="text-3xl">🚀</span>
-                  <span className="relative z-10 tracking-wide">HOZIROQ BOSHLANG!</span>
-                  <span className="text-3xl">💰</span>
+                  {/* Mobile-optimized layout */}
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto">
+                    <span className="text-xl sm:text-2xl lg:text-3xl flex-shrink-0">🚀</span>
+                    <span className="relative z-10 font-extrabold tracking-wide text-center flex-1 sm:flex-none">
+                      HOZIROQ BOSHLANG!
+                    </span>
+                    <span className="text-xl sm:text-2xl lg:text-3xl flex-shrink-0">💰</span>
+                  </div>
+                  
+                  {/* Animated shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+                  
+                  {/* Pulse effect */}
+                  <div className="absolute inset-0 bg-white/10 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" />
                 </motion.a>
                 
                 <p className="text-muted-foreground text-sm mt-6">
