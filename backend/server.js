@@ -9,26 +9,21 @@ const allowedOrigins = [
   'http://localhost:3000',  // Local development
   'https://oltin-rejalari.onrender.com',  // Your frontend URL
   'https://oltin-rejalari.vercel.app',    // Alternative frontend
-  'https://oltin-rejalari-92fl66317-gamer1408s-projects.vercel.app'  // Vercel deployment
+  'https://oltin-rejalari-92fl66317-gamer1408s-projects.vercel.app',  // Vercel deployment
+  'https://oltin-rejalari-gamer1408s-projects.vercel.app'  // Your actual domain
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true,  // Allow cookies/sessions
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'], // Add OPTIONS for preflight
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use(express.json()); // parse JSON bodies
+app.use(express.json());
+
+// Handle OPTIONS requests (CORS preflight)
+app.options('*', cors());
 
 app.get("/", (req, res) => {
   res.send("Server is running! Visit /ping to test the backend.");
