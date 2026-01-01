@@ -37,10 +37,37 @@ app.get("/", (req, res) => {
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'healthy',
+    backend: 'running',
     timestamp: new Date().toISOString(),
     service: 'oltin-rejalari-backend',
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    env: {
+      hasBotToken: !!process.env.BOT_TOKEN,
+      hasChatId: !!process.env.CHAT_ID,
+      port: process.env.PORT || 10000
+    }
   });
+});
+
+// Test Telegram connection
+app.get("/test-telegram", async (req, res) => {
+  try {
+    const testResponse = await fetch(
+      `https://api.telegram.org/bot${process.env.BOT_TOKEN}/getMe`
+    );
+    const data = await testResponse.json();
+    
+    res.json({
+      telegramConnection: data.ok ? "✅ Connected" : "❌ Failed",
+      botName: data.result?.first_name,
+      error: data.description
+    });
+  } catch (error) {
+    res.json({
+      telegramConnection: "❌ Failed",
+      error: error.message
+    });
+  }
 });
 
 // Test endpoint to verify connection
@@ -58,22 +85,89 @@ app.get("/ping", (req, res) => {
 });
 
 app.post("/send-message", async (req, res) => {
-  console.log("Request received:", req.body);
-  try {
-    const response = await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: process.env.CHAT_ID, text: req.body.text })
+  console.log("📨 [BACKEND] Request received:", {
+    body: req.body,
+    hasText: !!req.body?.text,
+    textLength: req.body?.text?.length || 0,
+    timestamp: new Date().toISOString()
+  });
+
+  // CRITICAL: Check if text exists
+  if (!req.body?.text?.trim()) {
+    console.error("❌ [BACKEND] Empty message text received");
+    return res.status(400).json({ 
+      success: false, 
+      error: "Message text is empty" 
     });
-    const data = await response.json();
-    if (!data.ok) {
-      console.error("Telegram API error:", data);
-      throw new Error(data.description);
+  }
+
+  // CRITICAL: Check environment variables
+  if (!process.env.BOT_TOKEN || !process.env.CHAT_ID) {
+    console.error("❌ [BACKEND] Missing environment variables:", {
+      hasBotToken: !!process.env.BOT_TOKEN,
+      hasChatId: !!process.env.CHAT_ID
+    });
+    return res.status(500).json({ 
+      success: false, 
+      error: "Server configuration error" 
+    });
+  }
+
+  try {
+    console.log("📤 [BACKEND] Sending to Telegram API...");
+    
+    const telegramResponse = await fetch(
+      `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: process.env.CHAT_ID,
+          text: req.body.text,
+          parse_mode: "HTML"  // Changed from Markdown for better formatting
+        })
+      }
+    );
+
+    const telegramData = await telegramResponse.json();
+    
+    console.log("📩 [BACKEND] Telegram API response:", {
+      ok: telegramData.ok,
+      description: telegramData.description,
+      errorCode: telegramData.error_code
+    });
+
+    if (!telegramData.ok) {
+      // SPECIFIC ERROR HANDLING
+      let userError = "Telegram xabar yuborilmadi";
+      
+      if (telegramData.error_code === 404) {
+        userError = "Bot token noto'g'ri (404)";
+      } else if (telegramData.error_code === 400) {
+        userError = "Chat topilmadi yoki bot bloklangan";
+      } else if (telegramData.description?.includes("chat not found")) {
+        userError = "Chat ID noto'g'ri";
+      }
+      
+      throw new Error(userError);
     }
+
+    console.log("✅ [BACKEND] Telegram message sent successfully!");
     res.json({ success: true });
+
   } catch (err) {
-    console.error("Telegram error:", err.message);
-    res.status(500).json({ success: false, error: err.message });
+    console.error("💥 [BACKEND] Telegram error details:", {
+      message: err.message,
+      stack: err.stack,
+      tokenPreview: process.env.BOT_TOKEN ? 
+        process.env.BOT_TOKEN.substring(0, 10) + "..." : 
+        "MISSING"
+    });
+    
+    res.status(500).json({ 
+      success: false, 
+      error: err.message || "Telegram xabar yuborilmadi"
+    });
   }
 });
 
