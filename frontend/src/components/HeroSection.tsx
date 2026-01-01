@@ -14,12 +14,12 @@ const HeroSection = () => {
         <img
           src={heroImage}
           alt="Raspberry field"
-          className="w-full h-full object-cover opacity-70"
+          className="w-full h-full object-cover opacity-70 light:opacity-90"
         />
         
         {/* Enhanced Overlay for better visibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background/80 light:from-background/30 light:via-background/10 light:to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60 light:from-background/20 light:via-transparent light:to-background/20" />
         
         {/* Accent overlay for warmth */}
         <div className="absolute inset-0 bg-accent/5" />

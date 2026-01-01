@@ -63,49 +63,49 @@
   }
 
   .light {
-    /* Enhanced Light mode - Stronger contrast */
+    /* Enhanced Light mode - Stronger contrast with bold blacks and greens */
     --background: 0 0% 100%;
-    --foreground: 0 0% 5%;
+    --foreground: 0 0% 0%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 5%;
+    --card: 0 0% 97%;
+    --card-foreground: 0 0% 0%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 0 0% 5%;
+    --popover: 0 0% 97%;
+    --popover-foreground: 0 0% 0%;
 
-    /* Stronger raspberry red for light mode */
-    --primary: 350 75% 40%;
+    /* Bold raspberry red for light mode */
+    --primary: 350 85% 35%;
     --primary-foreground: 0 0% 100%;
 
-    /* Darker forest green */
-    --secondary: 145 60% 30%;
+    /* Bold forest green */
+    --secondary: 145 70% 20%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Stronger muted */
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 25%;
+    /* Strong muted with better contrast */
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 15%;
 
-    /* Enhanced gold accent */
-    --accent: 45 90% 50%;
-    --accent-foreground: 0 0% 5%;
+    /* Bold gold accent */
+    --accent: 45 95% 45%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 85%;
-    --input: 0 0% 90%;
-    --ring: 350 75% 40%;
+    --border: 0 0% 75%;
+    --input: 0 0% 85%;
+    --ring: 350 85% 35%;
 
-    /* Enhanced light mode gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 96%) 50%, hsl(0 0% 92%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 94%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 90% 50%) 0%, hsl(35 85% 45%) 100%);
-    --gradient-raspberry: linear-gradient(135deg, hsl(350 75% 40%) 0%, hsl(340 70% 30%) 100%);
+    /* Bold light mode gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 94%) 50%, hsl(0 0% 88%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 97%) 0%, hsl(0 0% 90%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(45 95% 45%) 0%, hsl(35 90% 40%) 100%);
+    --gradient-raspberry: linear-gradient(135deg, hsl(350 85% 35%) 0%, hsl(340 80% 25%) 100%);
 
-    /* Stronger light mode glow effects */
-    --glow-gold: 0 0 50px hsl(45 90% 50% / 0.3);
-    --glow-raspberry: 0 0 50px hsl(350 75% 40% / 0.3);
-    --glow-emerald: 0 0 50px hsl(145 60% 30% / 0.3);
+    /* Enhanced light mode glow effects */
+    --glow-gold: 0 0 40px hsl(45 95% 45% / 0.4);
+    --glow-raspberry: 0 0 40px hsl(350 85% 35% / 0.4);
+    --glow-emerald: 0 0 40px hsl(145 70% 20% / 0.4);
   }
 }
 
