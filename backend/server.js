@@ -4,26 +4,25 @@ const fetch = require("node-fetch"); // for Telegram API
 require('dotenv').config(); // Load environment variables
 const app = express();
 
-// ✅ PRODUCTION CORS CONFIG
-const allowedOrigins = [
-  'http://localhost:3000',  // Local development
-  'https://oltin-rejalari.onrender.com',  // Your frontend URL
-  'https://oltin-rejalari.vercel.app',    // Alternative frontend
-  'https://oltin-rejalari-92fl66317-gamer1408s-projects.vercel.app',  // Vercel deployment
-  'https://oltin-rejalari-gamer1408s-projects.vercel.app'  // Your actual domain
-];
-
+// ✅ SIMPLE & PERMISSIVE CORS
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS'], // Add OPTIONS for preflight
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: '*', // Allow ALL origins temporarily
+  credentials: false, // Set to false when origin is '*'
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 
 app.use(express.json());
 
-// Handle OPTIONS requests (CORS preflight)
+// Handle preflight OPTIONS requests
 app.options('*', cors());
+
+// Add request logging to see what's coming
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  console.log('Origin:', req.headers.origin);
+  console.log('User-Agent:', req.headers['user-agent']?.substring(0, 50));
+  next();
+});
 
 app.get("/", (req, res) => {
   res.send("Server is running! Visit /ping to test the backend.");
@@ -37,6 +36,8 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
     service: 'oltin-rejalari-backend',
     environment: process.env.NODE_ENV || 'development',
+    cors: 'enabled',
+    allowedOrigins: 'all (*)',
     env: {
       hasBotToken: !!process.env.BOT_TOKEN,
       hasChatId: !!process.env.CHAT_ID,
@@ -81,6 +82,7 @@ app.get("/ping", (req, res) => {
 });
 
 app.post("/send-message", async (req, res) => {
+  console.log("📨 Telegram request received from:", req.headers.origin);
   console.log("📨 [BACKEND] Request received:", {
     body: req.body,
     hasText: !!req.body?.text,
