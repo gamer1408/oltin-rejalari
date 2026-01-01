@@ -1,20 +1,49 @@
 import { motion } from "framer-motion";
-import heroImage from "@/assets/hero-raspberry-field.jpg";
-import { TrendingUp, Truck, Shield } from "lucide-react";
+import { TrendingUp, Truck, Shield, Volume2, VolumeX } from "lucide-react";
+import { useState } from "react";
 
 const HeroSection = () => {
+  const [isMuted, setIsMuted] = useState(true);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={heroImage}
-          alt="Raspberry plantation field"
+        {/* Video Background - using a stock farming video that shows cultivation */}
+        <video
+          autoPlay
+          loop
+          muted={isMuted}
+          playsInline
           className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
+          poster="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&q=80"
+        >
+          {/* Using a placeholder video URL - in production use actual cultivation video */}
+          <source
+            src="https://videos.pexels.com/video-files/2942284/2942284-uhd_2560_1440_30fps.mp4"
+            type="video/mp4"
+          />
+        </video>
+        
+        {/* Dark Overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-transparent to-background/90" />
+        
+        {/* Additional dark overlay at center for text readability */}
+        <div className="absolute inset-0 bg-background/30" />
       </div>
+
+      {/* Mute/Unmute Button */}
+      <button
+        onClick={() => setIsMuted(!isMuted)}
+        className="absolute bottom-24 right-6 z-20 w-12 h-12 rounded-full glass-card flex items-center justify-center hover:scale-105 transition-transform border border-accent/30"
+      >
+        {isMuted ? (
+          <VolumeX className="w-5 h-5 text-accent" />
+        ) : (
+          <Volume2 className="w-5 h-5 text-accent" />
+        )}
+      </button>
 
       {/* Floating Decorative Elements */}
       <motion.div
