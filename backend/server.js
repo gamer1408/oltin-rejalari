@@ -13,8 +13,8 @@ app.use(cors({
 
 app.use(express.json());
 
-// Handle preflight OPTIONS requests
-app.options('*', cors());
+// Handle preflight OPTIONS requests for specific route
+app.options('/send-message', cors());
 
 // Add request logging to see what's coming
 app.use((req, res, next) => {
