@@ -1,5 +1,6 @@
 const express = require("express");
 const fetch = require("node-fetch"); // for Telegram API
+require('dotenv').config(); // Load environment variables
 const app = express();
 
 // Enable CORS for all origins
@@ -47,6 +48,9 @@ app.post("/send-message", async (req, res) => {
 
 const PORT = process.env.PORT;  // dynamic port assigned by Render
 const HOST = '0.0.0.0';         // must bind to all interfaces
+
+// Environment validation
+console.log("Environment check:", { BOT_TOKEN: process.env.BOT_TOKEN, CHAT_ID: process.env.CHAT_ID });
 
 app.listen(PORT, HOST, () => {
   console.log(`Server running on ${HOST}:${PORT}`);
