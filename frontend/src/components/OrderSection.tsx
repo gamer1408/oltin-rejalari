@@ -22,7 +22,6 @@ const OrderSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Send to Telegram via Render backend
       const messageText = `📝 Yangi ariza!
 
 👤 Ism: ${formData.name}
@@ -32,27 +31,48 @@ const OrderSection = () => {
 🍓 Nav: ${formData.type === 'maravilla' ? 'Maravilla' : formData.type === 'enrasadera' ? 'Enrasadera' : 'Ikkalasi'}
 💬 Xabar: ${formData.message || "Yo'q"}`;
       
+      console.log("📤 Frontend sending:", { 
+        url: "https://oltin-rejalari.onrender.com/send-message",
+        textPreview: messageText.substring(0, 50) + "..."
+      });
+      
       const response = await fetch("https://oltin-rejalari.onrender.com/send-message", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({ text: messageText })
       });
       
-      const result = await response.json();
+      console.log("📥 Backend response status:", response.status);
       
-      if (result.success) {
-        toast.success("✅ Ariza muvaffaqiyatli yuborildi!", {
-          description: "Tez orada bog'lanamiz.",
-        });
-        setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
-      } else {
-        throw new Error(result.error || 'Server error');
+      const result = await response.json();
+      console.log("📥 Backend response data:", result);
+      
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || `HTTP ${response.status}`);
       }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast.error("❌ Xatolik: Ariza yuborilmadi", {
-        description: "Iltimos telefon orqali bog'laning: +998 93 127 57 37",
+      
+      toast.success("✅ Ariza muvaffaqiyatli yuborildi!");
+      setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
+      
+    } catch (error: any) {
+      console.error("💥 Full error:", {
+        message: error.message,
+        stack: error.stack
       });
+      
+      // Specific error messages
+      if (error.message.includes('Failed to fetch')) {
+        toast.error("❌ Serverga ulanmadi. Internetni tekshiring.");
+      } else if (error.message.includes('401') || error.message.includes('403')) {
+        toast.error("❌ Ruxsat yo'q (CORS muammosi)");
+      } else if (error.message.includes('NetworkError')) {
+        toast.error("❌ Tarmoq xatosi");
+      } else {
+        toast.error(`❌ Xatolik: ${error.message}`);
+      }
     } finally {
       setIsSubmitting(false);
     }

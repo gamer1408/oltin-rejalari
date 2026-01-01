@@ -9,6 +9,7 @@ const allowedOrigins = [
   'http://localhost:3000',  // Local development
   'https://oltin-rejalari.onrender.com',  // Your frontend URL
   'https://oltin-rejalari.vercel.app',    // Alternative frontend
+  'https://oltin-rejalari-92fl66317-gamer1408s-projects.vercel.app'  // Vercel deployment
 ];
 
 app.use(cors({
