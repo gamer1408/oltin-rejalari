@@ -294,7 +294,7 @@ const ProductsSection = () => {
               className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-accent via-accent to-secondary text-accent-foreground font-bold text-lg shadow-2xl hover:shadow-accent/25 transition-all duration-300 relative overflow-hidden group"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-accent/80 to-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative z-10">✨ Ariza Yuborish</span>
+              <span className="relative z-10">✨ Buyurtma Yuborish</span>
               <motion.span
                 animate={{ x: [0, 5, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}

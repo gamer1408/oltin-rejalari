@@ -54,7 +54,7 @@ const OrderSection = () => {
         throw new Error(result.error || `HTTP ${response.status}`);
       }
       
-      toast.success("✅ Ariza muvaffaqiyatli yuborildi!");
+      toast.success("✅ Buyurtma muvaffaqiyatli yuborildi!");
       setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
       
     } catch (error: any) {
@@ -225,7 +225,7 @@ const OrderSection = () => {
                 className={`w-full btn-premium flex items-center justify-center gap-3 py-5 text-xl ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Send className="w-6 h-6 relative z-10" />
-                <span className="relative z-10">{isSubmitting ? 'Yuborilmoqda...' : 'Ariza Yuborish'}</span>
+                <span className="relative z-10">{isSubmitting ? 'Yuborilmoqda...' : 'Buyurtma Yuborish'}</span>
               </motion.button>
             </form>
           </motion.div>

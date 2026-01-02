@@ -72,7 +72,7 @@ const Navbar = () => {
               href="#order"
               className="btn-premium py-2.5 px-6 text-sm"
             >
-              <span className="relative z-10">Ariza Berish</span>
+              <span className="relative z-10">Buyurtma Berish</span>
             </a>
           </div>
 
@@ -128,7 +128,7 @@ const Navbar = () => {
                 href="#order"
                 className="btn-premium py-3 text-center mt-2"
               >
-                <span className="relative z-10">Ariza Berish</span>
+                <span className="relative z-10">Buyurtma Berish</span>
               </a>
             </div>
           </div>
