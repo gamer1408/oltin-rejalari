@@ -12,7 +12,7 @@ const CalculatorSection = () => {
 
   // Calculations
   const initialCharge = plants * 30000;
-  const harvest = plants * 2 * 60000;
+  const harvest = plants * 1 * 65000; // Maravilla: 1kg × 65,000 so'm
   const plantSales = plants * 5 * 30000;
   const yearlyIncome = harvest + plantSales;
   const yearlyProfit = yearlyIncome - initialCharge;
@@ -64,7 +64,7 @@ const CalculatorSection = () => {
       formula: "Hosil daromadi + Nihol sotish daromadi",
       explanation: "Meva sotish va nihol ko'paytirish daromadi",
       breakdown: [
-        `Hosil daromadi: ${plants.toLocaleString()} × 2 kg × 60 ming = ${formatNumber(harvest)} so'm`,
+        `Hosil daromadi: ${plants.toLocaleString()} × 1 kg × 65 ming = ${formatNumber(harvest)} so'm`,
         `Nihol sotish: ${plants.toLocaleString()} × 5 dona × 30 ming = ${formatNumber(plantSales)} so'm`,
         `Jami yillik daromad: ${formatNumber(harvest)} + ${formatNumber(plantSales)} = ${formatNumber(yearlyIncome)} so'm`
       ]
