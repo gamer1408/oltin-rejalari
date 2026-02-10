@@ -4,10 +4,10 @@ import { useRef, useState, useEffect } from "react";
 import { TrendingUp, Users, Leaf, MapPin, ChevronDown, Play, Image as ImageIcon } from "lucide-react";
 
 const stats = [
-  { 
-    icon: TrendingUp, 
-    value: 300, 
-    suffix: "%", 
+  {
+    icon: TrendingUp,
+    value: 300,
+    suffix: "%",
     label: "O'rtacha yillik daromad",
     details: {
       title: "Daromad Natijalari",
@@ -19,10 +19,10 @@ const stats = [
       ]
     }
   },
-  { 
-    icon: Users, 
-    value: 500, 
-    suffix: "+", 
+  {
+    icon: Users,
+    value: 500,
+    suffix: "+",
     label: "Mamnun mijozlar",
     details: {
       title: "Mijozlarimiz Fikrlari",
@@ -35,10 +35,10 @@ const stats = [
       ]
     }
   },
-  { 
-    icon: Leaf, 
-    value: 50000, 
-    suffix: "+", 
+  {
+    icon: Leaf,
+    value: 50000,
+    suffix: "+",
     label: "Sotilgan nihollar",
     details: {
       title: "Sotilgan Nihollar",
@@ -51,14 +51,14 @@ const stats = [
       ]
     }
   },
-  { 
-    icon: MapPin, 
-    value: 14, 
-    suffix: "", 
+  {
+    icon: MapPin,
+    value: 14,
+    suffix: "",
     label: "Viloyatga yetkazib berish",
     details: {
       title: "Yetkazib Berish",
-      description: "O'zbekistonning barcha 14 viloyatiga va Toshkent shahriga bepul yetkazib beramiz (1000+ niholga).",
+      description: "O'zbekistonning barcha 14 viloyatiga yetkazib beramiz. 1000+ niholga parvarish qilish bo'yicha ko'rsatmalarni ham qo'lga kiritasiz.",
       items: [
         "Toshkent shahri va viloyati",
         "Samarqand, Buxoro, Xorazm",
@@ -110,7 +110,7 @@ const StatsSection = () => {
       {/* Enhanced Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-card/50 to-background" />
       <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-secondary/5" />
-      
+
       {/* Floating decorative elements */}
       <motion.div
         className="absolute top-20 left-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl"
@@ -122,7 +122,7 @@ const StatsSection = () => {
         animate={{ y: [0, 20, 0], opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
-      
+
       <div className="container relative z-10 px-4">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -139,7 +139,7 @@ const StatsSection = () => {
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-accent font-semibold text-sm tracking-wide">ISBOTLANGAN NATIJALAR</span>
           </motion.div>
-          
+
           <h2 className="font-serif text-5xl md:text-7xl font-bold mb-6">
             <span className="text-foreground">Raqamlarda</span>{" "}
             <span className="text-gradient-gold">Natijalarimiz</span>
@@ -147,7 +147,7 @@ const StatsSection = () => {
           <p className="text-foreground/70 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
             3 yillik tajriba, minglab mamnun mijozlar va <span className="text-accent font-semibold">kafolatlangan sifat</span>
           </p>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.8 }}
@@ -170,11 +170,10 @@ const StatsSection = () => {
                 onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full glass-card rounded-3xl p-6 md:p-8 text-center group transition-all duration-500 cursor-pointer border-2 ${
-                  expandedIndex === index 
-                    ? 'border-accent glow-gold bg-gradient-to-br from-accent/10 to-secondary/10' 
+                className={`w-full glass-card rounded-3xl p-6 md:p-8 text-center group transition-all duration-500 cursor-pointer border-2 ${expandedIndex === index
+                    ? 'border-accent glow-gold bg-gradient-to-br from-accent/10 to-secondary/10'
                     : 'border-accent/20 hover:border-accent/40 hover:glow-gold'
-                }`}
+                  }`}
               >
                 <motion.div
                   whileHover={{ scale: 1.15, rotate: 10 }}
@@ -208,9 +207,9 @@ const StatsSection = () => {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="mt-8 overflow-hidden"
             >
-                <div className="glass-card rounded-3xl p-10 md:p-12 border-2 border-accent/30 bg-gradient-to-br from-accent/5 to-secondary/5">
+              <div className="glass-card rounded-3xl p-10 md:p-12 border-2 border-accent/30 bg-gradient-to-br from-accent/5 to-secondary/5">
                 <div className="flex items-start gap-6 mb-8">
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.8 }}
                     className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/30 to-secondary/40 flex items-center justify-center flex-shrink-0 shadow-lg"
@@ -229,7 +228,7 @@ const StatsSection = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-6">
                   {stats[expandedIndex].details.items.map((item, i) => (
                     <motion.div

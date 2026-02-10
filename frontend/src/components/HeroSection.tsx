@@ -16,11 +16,11 @@ const HeroSection = () => {
           alt="Raspberry field"
           className="w-full h-full object-cover opacity-70 light:opacity-90"
         />
-        
+
         {/* Enhanced Overlay for better visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background/80 light:from-background/30 light:via-background/10 light:to-background/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60 light:from-background/20 light:via-transparent light:to-background/20" />
-        
+
         {/* Accent overlay for warmth */}
         <div className="absolute inset-0 bg-accent/5" />
       </div>
@@ -76,7 +76,7 @@ const HeroSection = () => {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed px-4"
           >
-            1 yil ichida <span className="text-accent font-semibold">300% daromad</span> oling. 
+            1 yil ichida <span className="text-accent font-semibold">300% daromad</span> oling.
             Premium navlar — O'zbekiston iqlimiga moslashtirilgan.
           </motion.p>
 
@@ -104,7 +104,7 @@ const HeroSection = () => {
           >
             {[
               { icon: TrendingUp, title: "300%+", subtitle: "Yillik Daromad" },
-              { icon: Truck, title: "BEPUL", subtitle: "1000+ niholga yetkazib berish" },
+              { icon: Truck, title: "BEPUL", subtitle: "1000+ niholga parvarish qilish bo'yicha ko'rsatmalarni qo'lga kiritasiz" },
               { icon: Shield, title: "100%", subtitle: "Kafolat" },
             ].map((item, index) => (
               <motion.div
@@ -115,7 +115,7 @@ const HeroSection = () => {
                 whileHover={{ y: -5, scale: 1.02 }}
                 className="glass-card rounded-2xl p-4 flex items-center gap-4 border-2 border-accent/20 hover:border-accent/40 hover:glow-gold transition-all duration-500"
               >
-                <motion.div 
+                <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
                   className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/30 to-secondary/40 flex items-center justify-center flex-shrink-0"

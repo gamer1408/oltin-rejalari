@@ -10,59 +10,51 @@ const OrderSection = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    region: "",
-    plants: "",
-    type: "maravilla",
-    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       const messageText = `📝 Yangi ariza!
 
 👤 Ism: ${formData.name}
-📞 Telefon: ${formData.phone}
-📍 Viloyat: ${formData.region}
-📦 Nihollar soni: ${formData.plants}
-🍓 Nav: ${formData.type === 'maravilla' ? 'Maravilla' : formData.type === 'enrasadera' ? 'Enrasadera' : 'Ikkalasi'}
-💬 Xabar: ${formData.message || "Yo'q"}`;
-      
-      console.log("📤 Frontend sending:", { 
+📞 Telefon: ${formData.phone}`;
+
+      console.log("📤 Frontend sending:", {
         url: "https://oltin-rejalari.onrender.com/send-message",
         textPreview: messageText.substring(0, 50) + "..."
       });
-      
+
       const response = await fetch("https://oltin-rejalari.onrender.com/send-message", {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
         body: JSON.stringify({ text: messageText })
       });
-      
+
       console.log("📥 Backend response status:", response.status);
-      
+
       const result = await response.json();
       console.log("📥 Backend response data:", result);
-      
+
       if (!response.ok || !result.success) {
         throw new Error(result.error || `HTTP ${response.status}`);
       }
-      
-      toast.success("✅ Buyurtma muvaffaqiyatli yuborildi!");
-      setFormData({ name: "", phone: "", region: "", plants: "", type: "maravilla", message: "" });
-      
+
+      toast.success("✅ Ariza muvaffaqiyatli yuborildi!");
+      setFormData({ name: "", phone: "" });
+
     } catch (error: any) {
       console.error("💥 Full error:", {
         message: error.message,
         stack: error.stack
       });
-      
+
       // Specific error messages
       if (error.message.includes('Failed to fetch')) {
         toast.error("❌ Serverga ulanmadi. Internetni tekshiring.");
@@ -82,7 +74,7 @@ const OrderSection = () => {
     <section id="order" className="py-24 relative overflow-hidden" ref={ref}>
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/50 to-background" />
-      
+
       {/* Decorative Glow */}
       <motion.div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-accent/5 blur-3xl"
@@ -105,9 +97,9 @@ const OrderSection = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6 border border-accent/20"
           >
             <Sparkles className="w-4 h-4 text-accent" />
-            <span className="text-accent text-sm font-medium">BUYURTMA BERISH</span>
+            <span className="text-accent text-sm font-medium">ARIZA QOLDIRISH</span>
           </motion.div>
-          
+
           <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
             <span className="text-foreground">Hoziroq</span>{" "}
             <span className="text-gradient-gold">Boshlang</span>
@@ -125,7 +117,7 @@ const OrderSection = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-6 md:p-8 lg:p-10 border border-border/50">
-              <div className="grid gap-6 mb-6">
+              <div className="grid gap-6 mb-8">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">Ismingiz *</label>
                   <input
@@ -150,73 +142,6 @@ const OrderSection = () => {
                 </div>
               </div>
 
-              <div className="grid gap-6 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Viloyat *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.region}
-                    onChange={(e) => setFormData({ ...formData, region: e.target.value })}
-                    className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all text-lg"
-                    placeholder="Masalan: Toshkent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Nihollar soni *</label>
-                  <input
-                    type="number"
-                    required
-                    min="50"
-                    value={formData.plants}
-                    onChange={(e) => setFormData({ ...formData, plants: e.target.value })}
-                    className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all text-lg"
-                    placeholder="Minimum 50 ta"
-                  />
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-foreground mb-2">Nav tanlang *</label>
-                <div className="grid gap-3">
-                  {[
-                    { id: "maravilla", name: "Maravilla" },
-                    { id: "enrasadera", name: "Enrasadera" },
-                    { id: "both", name: "Ikkalasi" },
-                  ].map((type) => (
-                    <label
-                      key={type.id}
-                      className={`text-center py-4 px-4 rounded-xl cursor-pointer border-2 transition-all text-lg font-medium ${
-                        formData.type === type.id
-                          ? "border-accent bg-accent/10 text-accent"
-                          : "border-border/50 text-muted-foreground hover:border-accent/50"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="type"
-                        value={type.id}
-                        checked={formData.type === type.id}
-                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                        className="sr-only"
-                      />
-                      {type.name}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mb-8">
-                <label className="block text-sm font-medium text-foreground mb-2">Qo'shimcha xabar</label>
-                <textarea
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={4}
-                  className="w-full px-4 py-4 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none text-lg"
-                  placeholder="Savollaringiz yoki istaklaringiz..."
-                />
-              </div>
-
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
@@ -225,7 +150,7 @@ const OrderSection = () => {
                 className={`w-full btn-premium flex items-center justify-center gap-3 py-5 text-xl ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Send className="w-6 h-6 relative z-10" />
-                <span className="relative z-10">{isSubmitting ? 'Yuborilmoqda...' : 'Buyurtma Yuborish'}</span>
+                <span className="relative z-10">{isSubmitting ? 'Yuborilmoqda...' : 'Ariza Yuborish'}</span>
               </motion.button>
             </form>
           </motion.div>
@@ -290,7 +215,7 @@ const OrderSection = () => {
                 {[
                   "100% tirik nihollar kafolati",
                   "Bepul maslahat va qo'llanma",
-                  "1000+ niholga bepul yetkazib berish",
+                  "1000+ niholga parvarish qilish bo'yicha ko'rsatmalarni ham qo'lga kiritasiz",
                   "To'lov faqat qabul qilgandan keyin",
                 ].map((item, index) => (
                   <motion.li
