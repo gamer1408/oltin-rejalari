@@ -29,7 +29,7 @@ const products = [
     borderColor: "border-primary/30",
   },
   {
-    name: "Enrasadira",
+    name: "Atlant",
     tagline: "Hosildor",
     images: [enrasaderaImage, maravillaImage, enrasaderaImage, maravillaImage],
     price: "30,000",
@@ -75,7 +75,7 @@ const ImageCarousel = ({ images, productName, color }: { images: string[]; produ
         />
       ))}
       <div className={`absolute inset-0 bg-gradient-to-t ${color}`} />
-      
+
       {/* Navigation Arrows */}
       <button
         onClick={(e) => {
@@ -105,9 +105,8 @@ const ImageCarousel = ({ images, productName, color }: { images: string[]; produ
               e.preventDefault();
               setCurrentIndex(index);
             }}
-            className={`w-2 h-2 rounded-full transition-all ${
-              index === currentIndex ? "bg-accent w-4" : "bg-foreground/30"
-            }`}
+            className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? "bg-accent w-4" : "bg-foreground/30"
+              }`}
           />
         ))}
       </div>
@@ -123,7 +122,7 @@ const ProductsSection = () => {
     <section id="products" className="py-24 relative overflow-hidden" ref={ref}>
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
-      
+
       {/* Decorative Elements */}
       <motion.div
         className="absolute top-40 -left-20 w-72 h-72 rounded-full bg-primary/5 blur-3xl"
@@ -153,13 +152,13 @@ const ProductsSection = () => {
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-accent text-sm font-medium">PREMIUM NAVLAR</span>
           </motion.div>
-          
+
           <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
             <span className="text-foreground">Bizning</span>{" "}
             <span className="text-gradient-raspberry">Mahsulotlar</span>
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto">
-            Ispaniyadan keltirilgan, O'zbekiston iqlimiga 3 yil davomida sinab ko'rilgan 
+            Ispaniyadan keltirilgan, O'zbekiston iqlimiga 3 yil davomida sinab ko'rilgan
             va ajoyib natija bergan navlar
           </p>
         </motion.div>
@@ -190,7 +189,7 @@ const ProductsSection = () => {
               <div className={`glass-card rounded-2xl overflow-hidden border-2 ${product.borderColor} group-hover:border-accent/60 group-hover:shadow-2xl group-hover:shadow-accent/20 transition-all duration-500 bg-gradient-to-br ${product.color} backdrop-blur-xl`}>
                 {/* Image Carousel */}
                 <ImageCarousel images={product.images} productName={product.name} color={product.color} />
-                
+
                 {/* ROI Badge */}
                 <div className="relative">
                   <div className="absolute -top-10 left-4 flex items-center gap-2 px-4 py-2 rounded-full glass-card border-2 border-accent/40 bg-accent/10 backdrop-blur-sm z-10">
@@ -261,10 +260,10 @@ const ProductsSection = () => {
             >
               🍓
             </motion.div>
-            
+
             <div className="space-y-4 mb-8">
               <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-                🍓 Maravilla yoki Enrasadera?
+                🍓 Maravilla yoki Atlant?
               </h3>
               <p className="text-xl text-accent font-semibold">
                 💰 Narxi bir xil.
@@ -272,7 +271,7 @@ const ProductsSection = () => {
               <p className="text-xl text-foreground/80">
                 📈 Foydasi — strategiyaga bog'liq.
               </p>
-              
+
               <div className="border-t border-accent/20 pt-6 mt-6">
                 <p className="text-lg text-foreground font-medium mb-2">
                   Biz nav sotmaymiz.
@@ -281,7 +280,7 @@ const ProductsSection = () => {
                   Biz foyda yo'lini taklif qilamiz.
                 </p>
               </div>
-              
+
               <p className="text-lg text-foreground/70 mt-6">
                 👇 Ariza qoldiring.
               </p>

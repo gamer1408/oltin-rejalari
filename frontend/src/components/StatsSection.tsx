@@ -45,7 +45,7 @@ const stats = [
       description: "3 yil davomida 50,000 dan ortiq premium sifatli malina nihollari sotildi va yetkazib berildi.",
       items: [
         "Maravilla: 30,000+ nihollar",
-        "Enrasadera: 20,000+ nihollar",
+        "Atlant: 20,000+ nihollar",
         "100% tiriklik kafolati",
         "Professional qadoqlash"
       ]
@@ -171,8 +171,8 @@ const StatsSection = () => {
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className={`w-full glass-card rounded-3xl p-6 md:p-8 text-center group transition-all duration-500 cursor-pointer border-2 ${expandedIndex === index
-                    ? 'border-accent glow-gold bg-gradient-to-br from-accent/10 to-secondary/10'
-                    : 'border-accent/20 hover:border-accent/40 hover:glow-gold'
+                  ? 'border-accent glow-gold bg-gradient-to-br from-accent/10 to-secondary/10'
+                  : 'border-accent/20 hover:border-accent/40 hover:glow-gold'
                   }`}
               >
                 <motion.div

@@ -81,58 +81,58 @@ const galleryItems: GalleryItem[] = [
     category: "maravilla",
     area: "Maravilla"
   },
-  // Enrasadira
+  // Atlant
   {
     type: "image",
     src: enrasaderaImage,
     thumbnail: enrasaderaImage,
-    title: "Enrasadira o'sishi",
-    description: "Enrasadira navining o'sish tizimi",
-    category: "enrasadira",
-    area: "Enrasadira"
+    title: "Atlant o'sishi",
+    description: "Atlant navining o'sish tizimi",
+    category: "atlant",
+    area: "Atlant"
   },
   {
     type: "image",
     src: enrasadira1,
     thumbnail: enrasadira1,
-    title: "Enrasadira plantatsiyasi",
-    description: "Enrasadira navining bog'dagi ko'rinishi",
-    category: "enrasadira",
-    area: "Enrasadira"
+    title: "Atlant plantatsiyasi",
+    description: "Atlant navining bog'dagi ko'rinishi",
+    category: "atlant",
+    area: "Atlant"
   },
   {
     type: "image",
     src: enrasadira2,
     thumbnail: enrasadira2,
-    title: "Enrasadira mevasi",
-    description: "Pishgan Enrasadira mevalarining rangi va shakli",
-    category: "enrasadira",
-    area: "Enrasadira"
+    title: "Atlant mevasi",
+    description: "Pishgan Atlant mevalarining rangi va shakli",
+    category: "atlant",
+    area: "Atlant"
   },
   {
     type: "image",
     src: enrasadira3,
     thumbnail: enrasadira3,
-    title: "Enrasadira hosili",
-    description: "Enrasadira navidan olingan hosil",
-    category: "enrasadira",
-    area: "Enrasadira"
+    title: "Atlant hosili",
+    description: "Atlant navidan olingan hosil",
+    category: "atlant",
+    area: "Atlant"
   },
   {
     type: "image",
     src: enrasadira4,
     thumbnail: enrasadira4,
-    title: "Enrasadira bog'i",
-    description: "Enrasadira plantatsiyasining umumiy manzarasi",
-    category: "enrasadira",
-    area: "Enrasadira"
+    title: "Atlant bog'i",
+    description: "Atlant plantatsiyasining umumiy manzarasi",
+    category: "atlant",
+    area: "Atlant"
   },
 ];
 
 const categories = [
   { id: "all", label: "Barchasi" },
   { id: "maravilla", label: "Maravilla" },
-  { id: "enrasadira", label: "Enrasadira" },
+  { id: "atlant", label: "Atlant" },
 ];
 
 const GallerySection = () => {
@@ -142,8 +142,8 @@ const GallerySection = () => {
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const filteredItems = selectedCategory === "all" 
-    ? galleryItems 
+  const filteredItems = selectedCategory === "all"
+    ? galleryItems
     : galleryItems.filter(item => item.category === selectedCategory);
 
   const openLightbox = (item: GalleryItem, index: number) => {
@@ -156,7 +156,7 @@ const GallerySection = () => {
   };
 
   const navigateLightbox = (direction: "prev" | "next") => {
-    const newIndex = direction === "prev" 
+    const newIndex = direction === "prev"
       ? (lightboxIndex - 1 + filteredItems.length) % filteredItems.length
       : (lightboxIndex + 1) % filteredItems.length;
     setLightboxIndex(newIndex);
@@ -196,11 +196,10 @@ const GallerySection = () => {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
-                selectedCategory === category.id
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${selectedCategory === category.id
                   ? "bg-accent text-accent-foreground shadow-lg"
                   : "bg-card text-foreground hover:bg-accent/10 border border-border shadow-sm"
-              }`}
+                }`}
             >
               {category.label}
             </button>
@@ -230,10 +229,10 @@ const GallerySection = () => {
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  
+
                   {/* Professional Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
+
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-accent/90 backdrop-blur-sm rounded-full text-xs font-semibold text-accent-foreground shadow-sm">
@@ -328,7 +327,7 @@ const GallerySection = () => {
           </button>
 
           {/* Content */}
-          <div 
+          <div
             className="max-w-5xl w-full max-h-[80vh] relative"
             onClick={(e) => e.stopPropagation()}
           >
@@ -348,7 +347,7 @@ const GallerySection = () => {
                 className="w-full h-auto max-h-[70vh] object-contain rounded-2xl"
               />
             )}
-            
+
             <div className="mt-4 text-center">
               <h3 className="text-xl font-bold text-foreground mb-2">{lightboxItem.title}</h3>
               <p className="text-muted-foreground">{lightboxItem.description}</p>
